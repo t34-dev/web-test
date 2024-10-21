@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "envMode": "loose",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -15,6 +16,9 @@
       "persistent": true
     },
     "test": {},
+    "start": {
+      "dependsOn": ["build"]
+    },
     "prisma:migrate:deploy": {},
     "prisma:migrate": {},
     "prisma:push": {},
