@@ -21,6 +21,7 @@
     "@prisma/client": "5.10.2"
   },
   "devDependencies": {
+    "@types/eslint": "^9.6.1",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "prettier": "^3.2.5",
