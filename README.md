@@ -8,11 +8,10 @@ This turborepo includes the following packages/apps:
 
     .
     ├── apps
-    │   ├── backend                   # Express app (https://expressjs.com)
+    │   ├── backend                   # NestJS app (https://nestjs.com)
     │   └── web                       # Vite app (https://vite.dev)
     └── packages
         ├── @repo/common              # Shared monorepo resources
-        ├── @repo/database            # Prisma ORM wrapper to manage & access your database (https://prisma.io)
         ├── @repo/eslint-config       # `eslint` configurations (includes `prettier`)
         ├── @repo/jest-config         # `jest` configurations
         └── @repo/typescript-config   # `tsconfig.json`s used throughout the monorepo
@@ -86,10 +85,10 @@ To make this process easier, we offer a [`docker-compose.yml`](https://docs.dock
 docker-compose up -d
 ```
 
-Once deployed you will need to copy the `.env.example` file to `.env` in order for Prisma to have a `DATABASE_URL` environment variable to access.
+Once deployed you will need to create `.env` file in `apps/backend` in order for Prisma to have a `DATABASE_URL` environment variable to access.
 
 ```bash
-cp .env.example .env
+touch apps/backend/.env
 ```
 
 If you added a custom database name, or use a cloud based database, you will need to update the `DATABASE_URL` in your `.env` accordingly.
