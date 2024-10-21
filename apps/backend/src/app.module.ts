@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Config } from './config/config';
@@ -8,11 +8,16 @@ import {
 } from './nestjs/errors/exceptionHandler';
 import { ErrorHandler } from './nestjs/filter';
 import { ConfigModuleFactory } from './config/config.module';
+import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
+import { makeModulesGlobal } from './nestjs/makeModulesGlobal';
+import { UserModule } from './user/user.module';
+import { ProviderKeyModule } from './providerKey';
 
 @Module({
   imports: [
     ConfigModuleFactory(Config),
     ExceptionHandlerModule.register(Config),
+    ...makeModulesGlobal([UserModule, ProviderKeyModule], []),
   ],
   providers: [
     { provide: APP_PIPE, useClass: ZodValidationPipe },
@@ -27,4 +32,8 @@ import { ConfigModuleFactory } from './config/config.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ClerkExpressRequireAuth()).forRoutes('*');
+  }
+}
