@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "prisma": {
-    "schema": "packages/database/prisma/schema.prisma"
+    "schema": "apps/backend/src/prisma/schema.prisma"
   },
   "scripts": {
     "build": "turbo run build",

@@ -45,9 +45,6 @@ importers:
       '@repo/common':
         specifier: workspace:*
         version: link:../../packages/common
-      '@repo/database':
-        specifier: workspace:*
-        version: link:../../packages/database
       class-transformer:
         specifier: ^0.5.1
         version: 0.5.1
@@ -175,40 +172,6 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-
-  packages/database:
-    dependencies:
-      '@prisma/client':
-        specifier: ^5.10.2
-        version: 5.10.2(prisma@5.10.2)
-    devDependencies:
-      '@repo/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@repo/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/node':
-        specifier: ^20.11.24
-        version: 20.16.13
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.1
-      prisma:
-        specifier: ^5.10.2
-        version: 5.10.2
-      rimraf:
-        specifier: ^5.0.5
-        version: 5.0.10
-      tsup:
-        specifier: ^8.0.2
-        version: 8.3.0(@swc/core@1.7.36)(tsx@4.19.1)(typescript@5.6.3)
-      tsx:
-        specifier: ^4.7.1
-        version: 4.19.1
-      typescript:
-        specifier: ^5.3.3
-        version: 5.6.3
 
   packages/eslint-config:
     devDependencies:
@@ -4974,13 +4937,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
-    dev: true
-
-  /rimraf@5.0.10:
-    resolution: {integrity: sha512-l0OE8wL34P4nJH/H2ffoaniAokM2qSmrtXHmlpvYr5AVVX8msAyW0l8NVJFDxlSK4u3Uh/f41cQheDVdnYijwQ==}
-    hasBin: true
-    dependencies:
-      glob: 10.4.5
     dev: true
 
   /rollup@4.24.0:
