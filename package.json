@@ -1,0 +1,35 @@
+{
+  "name": "turbo-starter",
+  "version": "0.0.0",
+  "private": true,
+  "prisma": {
+    "schema": "packages/database/prisma/schema.prisma"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "turbo run test",
+    "generate": "turbo run generate",
+    "prisma:migrate:deploy": "turbo run prisma:migrate:deploy",
+    "prisma:migrate": "turbo run prisma:migrate",
+    "prisma:push": "turbo run prisma:push"
+  },
+  "dependencies": {
+    "@prisma/client": "5.10.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "prettier": "^3.2.5",
+    "prisma": "5.10.2",
+    "tsx": "^4.7.1",
+    "turbo": "^2.2.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@8.14.3"
+}
