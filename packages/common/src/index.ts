@@ -1,1 +1,1 @@
-export * from './text/main.js';
+export * from './dto/providerKey.dto';

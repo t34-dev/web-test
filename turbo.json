@@ -4,8 +4,7 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT", ".env*"],
-      "outputs": ["dist/**"],
-      "env": ["PORT"]
+      "outputs": ["dist/**"]
     },
     "clean": {
       "cache": false
