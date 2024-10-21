@@ -12,12 +12,13 @@ import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
 import { makeModulesGlobal } from './nestjs/makeModulesGlobal';
 import { UserModule } from './user/user.module';
 import { ProviderKeyModule } from './providerKey';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
   imports: [
     ConfigModuleFactory(Config),
     ExceptionHandlerModule.register(Config),
-    ...makeModulesGlobal([UserModule, ProviderKeyModule], []),
+    ...makeModulesGlobal([PrismaModule, UserModule, ProviderKeyModule], []),
   ],
   providers: [
     { provide: APP_PIPE, useClass: ZodValidationPipe },
