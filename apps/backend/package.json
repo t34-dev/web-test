@@ -9,7 +9,11 @@
     "dev": "tsup --watch --onSuccess \"node ./dist/index.js\"",
     "lint": "tsc --noEmit && eslint . --max-warnings 0",
     "start": "node ./dist/index.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "generate": "prisma generate",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:push": "prisma db push"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.5",
