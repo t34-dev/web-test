@@ -14,13 +14,20 @@ import { ProviderKeyModule } from './providerKey';
 import { PrismaModule } from './prisma/prisma.module';
 import { ClientKeyModule } from './clientKey/clientKey.module';
 import { ClerkExpressRequireAuth } from './clerk/clerkExpressRequireAuth.middleware';
+import { ProxyModule } from './proxy/proxy.module';
 
 @Module({
   imports: [
     ConfigModuleFactory(Config),
     ExceptionHandlerModule.register(Config),
     ...makeModulesGlobal(
-      [PrismaModule, UserModule, ProviderKeyModule, ClientKeyModule],
+      [
+        PrismaModule,
+        UserModule,
+        ProviderKeyModule,
+        ClientKeyModule,
+        ProxyModule,
+      ],
       [],
     ),
   ],
