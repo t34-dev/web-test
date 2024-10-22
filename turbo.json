@@ -12,6 +12,7 @@
     },
     "lint": {},
     "dev": {
+      "dependsOn": ["env:up"],
       "cache": false,
       "persistent": true
     },
@@ -22,6 +23,9 @@
     "prisma:migrate:deploy": {},
     "prisma:migrate": {},
     "prisma:push": {},
-    "generate": {}
+    "generate": {},
+    "env:up": {
+      "cache": false
+    }
   }
 }
