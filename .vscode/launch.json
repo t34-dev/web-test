@@ -9,6 +9,12 @@
       "name": "backend",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "command": "pnpm turbo dev --filter backend",
+      "name": "backendV2",
+      "request": "launch",
+      "type": "pwa-node"
     }
   ]
 }

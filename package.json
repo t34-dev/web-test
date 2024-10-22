@@ -7,13 +7,15 @@
     "clean": "turbo run clean --filter=./apps/*",
     "lint": "turbo run lint",
     "dev": "turbo run dev --filter=./apps/*",
+    "dev:debug": "turbo run dev:debug --filter=backend",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
     "start": "turbo run start --filter=./apps/*",
-    "generate": "turbo run generate --filter=./apps/backend",
-    "prisma:migrate:deploy": "turbo run prisma:migrate:deploy --filter=./apps/backend",
-    "prisma:migrate": "turbo run prisma:migrate --filter=./apps/backend",
-    "prisma:push": "turbo run prisma:push --filter=./apps/backend"
+    "generate": "turbo run generate --filter=backend",
+    "prisma:migrate:deploy": "turbo run prisma:migrate:deploy --filter=backend",
+    "prisma:migrate": "turbo run prisma:migrate --filter=backend",
+    "prisma:push": "turbo run prisma:push --filter=backend",
+    "env:up": "turbo run env:up --filter=backend"
   },
   "devDependencies": {
     "@types/eslint": "^9.6.1",
