@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/client';
 
@@ -14,15 +14,26 @@ export class UserService {
     });
   }
 
-  public async get(clerkId: string): Promise<User> {
-    let user = await this.prismaService.user.findUnique({
-      where: {
-        clerkId,
-      },
+  public async get(args: { id: string }): Promise<User>;
+  public async get(args: { clerkId: string }): Promise<User>;
+  public async get(args: { id?: string; clerkId?: string }): Promise<User> {
+    const { id, clerkId } = args;
+
+    let filter: { id: string } | { clerkId: string };
+    if (id !== undefined) {
+      filter = { id };
+    } else if (clerkId !== undefined) {
+      filter = { clerkId };
+    } else {
+      throw new Error('Invalid arguments');
+    }
+
+    const user = await this.prismaService.user.findUnique({
+      where: filter,
     });
 
-    if (!user) {
-      user = await this.create(clerkId);
+    if (user === null) {
+      throw new NotFoundException();
     }
 
     return user;

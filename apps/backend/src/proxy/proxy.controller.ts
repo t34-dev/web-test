@@ -7,14 +7,15 @@ import {
 } from '@nestjs/common';
 import { CreateProxyDto, ProxyDto } from './proxy.dto';
 import { ProxyService } from './proxy.service';
-import { Provider } from '@prisma/client';
 import { ProviderKeyService } from '../providerKey';
+import { UserService } from '../user/user.service';
 
 @Controller('proxy')
 export class ProxyController {
   public constructor(
     private readonly proxyService: ProxyService,
     private readonly providerKeyService: ProviderKeyService,
+    private readonly userService: UserService,
   ) {}
 
   @Put()
@@ -24,8 +25,8 @@ export class ProxyController {
     if (providerKey === null) {
       throw new UnauthorizedException();
     }
-    const provider: Provider = null;
-    await this.proxyService.create({ provider, createProxyDto });
+    const user = await this.userService.get({ id: providerKey.userId });
+    await this.proxyService.create({ user, createProxyDto });
   }
 
   @Get()

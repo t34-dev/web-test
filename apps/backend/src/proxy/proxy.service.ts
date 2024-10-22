@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProxyDto } from './proxy.dto';
-import { Provider } from '@prisma/client';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class ProxyService {
   public constructor(private readonly prismaService: PrismaService) {}
 
-  async create(args: { provider: Provider; createProxyDto: CreateProxyDto }) {
-    const { createProxyDto, provider } = args;
+  async create(args: { user: User; createProxyDto: CreateProxyDto }) {
+    const { createProxyDto, user } = args;
     await this.prismaService.proxy.upsert({
       create: {
-        providerId: provider.id,
+        userId: user.id,
         providerProxyId: createProxyDto.providerProxyId,
         providerProxyName: createProxyDto.providerProxyName,
         url: createProxyDto.url,
