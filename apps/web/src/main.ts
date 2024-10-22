@@ -1,6 +1,9 @@
 import './style.css';
 import typescriptLogo from '/typescript.svg';
-import { getTitle } from '@repo/common';
+
+function getTitle() {
+  return 'Hello Vite + TypeScript!';
+}
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
