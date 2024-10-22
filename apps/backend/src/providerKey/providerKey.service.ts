@@ -24,6 +24,14 @@ export class ProviderKeyService {
     });
   }
 
+  async get(providerKey: string) {
+    return await this.prismaService.providerKey.findUnique({
+      where: {
+        key: providerKey,
+      },
+    });
+  }
+
   async list(args: { user: User }) {
     const { user } = args;
     return await this.prismaService.providerKey.findMany({
