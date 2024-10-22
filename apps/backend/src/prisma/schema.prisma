@@ -8,21 +8,39 @@ generator client {
 }
 
 model User {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId     String        @unique
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  isProvider  Boolean       @default(false)
-  ProviderKey ProviderKey[]
-  ClientKey   ClientKey[]
-  Proxy       Proxy[]
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId    String    @unique
+  providerId String?   @unique @db.ObjectId
+  provider   Provider? @relation(fields: [providerId], references: [id])
+
+  ProviderKeys ProviderKey[]
+  ClientKeys   ClientKey[]
+  Wallets      Wallet[]
+  Proxy        Proxy[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Provider {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String @unique
+  users User?
+
+  ProviderKeys ProviderKey[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model ClientKey {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  key       String   @unique
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -30,26 +48,51 @@ model ClientKey {
 }
 
 model ProviderKey {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  key       String   @unique
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  key String @unique
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  Provider   Provider? @relation(fields: [providerId], references: [id])
+  providerId String?   @db.ObjectId
 
   @@index([userId, id])
 }
 
 model Proxy {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  url               String
-  userId            String    @db.ObjectId
-  user              User      @relation(fields: [userId], references: [id])
-  providerProxyId   String    @unique
+  id  String @id @default(auto()) @map("_id") @db.ObjectId
+  url String
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  providerProxyId   String @unique
   providerProxyName String
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  deletedAt         DateTime?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   @@index([deletedAt, id])
+}
+
+enum MessageVersion {
+  v1
+}
+
+model Wallet {
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  messageVersion MessageVersion
+  signature      String?
+  address        String?
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }

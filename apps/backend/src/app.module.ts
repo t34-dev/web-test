@@ -15,6 +15,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ClientKeyModule } from './clientKey/clientKey.module';
 import { ClerkExpressRequireAuth } from './clerk/clerkExpressRequireAuth.middleware';
 import { ProxyModule } from './proxy/proxy.module';
+import { WalletModule } from './wallet/wallet.module';
+import { Web3Module } from './web3/web3.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { ProxyModule } from './proxy/proxy.module';
         ProviderKeyModule,
         ClientKeyModule,
         ProxyModule,
+        WalletModule,
+        Web3Module,
       ],
       [],
     ),
