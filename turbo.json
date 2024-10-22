@@ -3,8 +3,8 @@
   "envMode": "loose",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT", ".env*"],
+      "dependsOn": ["^build", "generate"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"]
     },
     "clean": {
@@ -22,8 +22,6 @@
     "prisma:migrate:deploy": {},
     "prisma:migrate": {},
     "prisma:push": {},
-    "generate": {
-      "dependsOn": ["^generate"]
-    }
+    "generate": {}
   }
 }
