@@ -13,10 +13,10 @@ import { UserModule } from './user/user.module';
 import { ProviderKeyModule } from './providerKey';
 import { PrismaModule } from './prisma/prisma.module';
 import { ClientKeyModule } from './clientKey/clientKey.module';
-import { ClerkExpressRequireAuth } from './clerk/clerkExpressRequireAuth.middleware';
 import { ProxyModule } from './proxy/proxy.module';
 import { WalletModule } from './wallet/wallet.module';
 import { Web3Module } from './web3/web3.module';
+import { requireAuth } from '@clerk/express';
 
 @Module({
   imports: [
@@ -50,6 +50,6 @@ import { Web3Module } from './web3/web3.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ClerkExpressRequireAuth()).forRoutes('*');
+    consumer.apply(requireAuth()).forRoutes('*');
   }
 }

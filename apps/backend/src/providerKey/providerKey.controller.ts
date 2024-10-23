@@ -1,45 +1,28 @@
 import { Controller, Get, Post } from '@nestjs/common';
 import { ProviderKeyService } from './providerKey.service';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { User, Provider } from '@prisma/client';
+import { UserService } from '../user/user.service';
+import { AuthUserId, type ClerkUserId } from '../auth/clerk';
 
 @Controller('providerKey')
 @ApiBearerAuth()
 @ApiTags('providerKey')
 export class ProviderKeyController {
-  constructor(private readonly providerKeyService: ProviderKeyService) {}
+  constructor(
+    private readonly providerKeyService: ProviderKeyService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post()
   @ApiResponse({ type: 'string' })
-  async create() {
-    const user: User = {
-      id: 1n,
-      clerkId: 'clerkId',
-      providerId: 1n,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    const provider: Provider = {
-      id: 1n,
-      name: 'name',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      deletedAt: null,
-    };
-
-    return await this.providerKeyService.create({ user, provider });
+  async create(@AuthUserId() clerkUserId: ClerkUserId) {
+    const user = await this.userService.get({ clerkUserId });
+    return await this.providerKeyService.create({ user });
   }
 
   @Get()
-  async list() {
-    const user: User = {
-      id: 1n,
-      clerkId: 'clerkId',
-      providerId: 1n,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-
+  async list(@AuthUserId() clerkUserId: ClerkUserId) {
+    const user = await this.userService.get({ clerkUserId });
     return await this.providerKeyService.list({ user });
   }
 }

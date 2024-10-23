@@ -1,4 +1,4 @@
-import { Type, VersioningType } from '@nestjs/common';
+import { Logger, Type, VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -41,4 +41,5 @@ export async function bootstrap<T>(appModule: Type<T>): Promise<void> {
   const config = app.get(Config);
 
   await app.listen(config.PORT);
+  Logger.log(`Listening on port http://localhost:${config.PORT}`);
 }

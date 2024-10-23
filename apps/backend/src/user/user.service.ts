@@ -6,34 +6,39 @@ import { User } from '@prisma/client';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  private async create(clerkId: string): Promise<User> {
+  private async create(args: { clerkUserId: string }): Promise<User> {
+    const { clerkUserId } = args;
     return await this.prismaService.user.create({
       data: {
-        clerkId,
+        clerkUserId,
       },
     });
   }
 
   public async get(args: { id: string }): Promise<User>;
-  public async get(args: { clerkId: string }): Promise<User>;
-  public async get(args: { id?: string; clerkId?: string }): Promise<User> {
-    const { id, clerkId } = args;
+  public async get(args: { clerkUserId: string }): Promise<User>;
+  public async get(args: { id?: string; clerkUserId?: string }): Promise<User> {
+    const { id, clerkUserId } = args;
 
-    let filter: { id: string } | { clerkId: string };
+    let filter: { id: string } | { clerkUserId: string };
     if (id !== undefined) {
       filter = { id };
-    } else if (clerkId !== undefined) {
-      filter = { clerkId };
+    } else if (clerkUserId !== undefined) {
+      filter = { clerkUserId };
     } else {
       throw new Error('Invalid arguments');
     }
 
-    const user = await this.prismaService.user.findUnique({
+    let user = await this.prismaService.user.findUnique({
       where: filter,
     });
 
     if (user === null) {
-      throw new NotFoundException();
+      if (clerkUserId !== undefined) {
+        user = await this.create({ clerkUserId });
+      } else {
+        throw new NotFoundException();
+      }
     }
 
     return user;
