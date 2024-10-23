@@ -31,7 +31,7 @@ export class ClientKeyService {
     });
   }
 
-  public async get(id: bigint): Promise<ClientKey> {
+  public async get(id: string): Promise<ClientKey> {
     const clientKey = await this.prismaService.clientKey.findUnique({
       where: {
         id,
@@ -43,7 +43,7 @@ export class ClientKeyService {
     return clientKey;
   }
 
-  public async delete(id: bigint) {
+  public async delete(id: string) {
     await this.prismaService.clientKey.delete({
       where: {
         id,

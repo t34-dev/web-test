@@ -3,6 +3,7 @@ import {
   Delete,
   ForbiddenException,
   Get,
+  Param,
   Post,
 } from '@nestjs/common';
 import { ClientKeyService } from './clientKey.service';
@@ -11,12 +12,13 @@ import {
   ApiBearerAuth,
   ApiForbiddenResponse,
   ApiOkResponse,
+  ApiParam,
   ApiResponse,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthUserId, type ClerkUserId } from '../auth/clerk';
-import { ClientKeyDto } from './clientKey.dto';
+import { ClientKeyDto, DeleteClientKeyParamsDto } from './clientKey.dto';
 
 @Controller('clientKey')
 @ApiTags('clientKey')
@@ -46,17 +48,22 @@ export class ClientKeyController {
   }
 
   @Delete(':id')
+  @ApiParam({ name: 'id', type: String })
   @ApiOkResponse()
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
-  public async delete(@AuthUserId() clerkUserId: ClerkUserId) {
-    const id = 123n;
+  public async delete(
+    @AuthUserId() clerkUserId: ClerkUserId,
+    @Param() deleteClientKeyParamsDto: DeleteClientKeyParamsDto,
+  ) {
     const user = await this.userService.get({ clerkUserId });
     const userId = user.id;
+    const id = deleteClientKeyParamsDto.id;
     const clientKey = await this.clientKeyService.get(id);
     if (clientKey.userId !== userId) {
       throw new ForbiddenException();
     }
+
     await this.clientKeyService.delete(id);
   }
 }
