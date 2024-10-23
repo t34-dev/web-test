@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { ProviderKey, User } from '@prisma/client';
 
@@ -12,7 +12,7 @@ export class ProviderKeyService {
     const providerKeys = await this.list({ user });
     const maxKeys = 5;
     if (providerKeys.length >= maxKeys) {
-      throw new Error(`You can only have ${maxKeys} keys`);
+      throw new BadRequestException(`You can only have ${maxKeys} keys`);
     }
 
     return await this.prismaService.providerKey.create({
@@ -23,14 +23,23 @@ export class ProviderKeyService {
     });
   }
 
-  async get(args: { key: string }): Promise<ProviderKey | null> {
-    const { key } = args;
-    const providerKey = await this.prismaService.providerKey.findUnique({
-      where: {
-        key,
-      },
+  async get(args: { key: string }): Promise<ProviderKey | null>;
+  async get(args: { id: string }): Promise<ProviderKey | null>;
+  async get(args: { id?: string; key?: string }): Promise<ProviderKey | null> {
+    const { id, key } = args;
+
+    let filter: { id: string } | { key: string };
+    if (id !== undefined) {
+      filter = { id };
+    } else if (key !== undefined) {
+      filter = { key };
+    } else {
+      throw new Error('id or key must be provided');
+    }
+
+    return await this.prismaService.providerKey.findUnique({
+      where: filter,
     });
-    return providerKey;
   }
 
   async list(args: { user: User }) {
@@ -38,6 +47,22 @@ export class ProviderKeyService {
     return await this.prismaService.providerKey.findMany({
       where: {
         userId: user.id,
+        deletedAt: null,
+      },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+  }
+
+  async delete(args: { providerKey: ProviderKey }) {
+    const { providerKey } = args;
+    return await this.prismaService.providerKey.update({
+      where: {
+        id: providerKey.id,
+      },
+      data: {
+        deletedAt: new Date(),
       },
     });
   }
