@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { User } from '@prisma/client';
+import { ProviderKey, User } from '@prisma/client';
 
 @Injectable()
 export class ProviderKeyService {
@@ -23,13 +23,14 @@ export class ProviderKeyService {
     });
   }
 
-  async get(args: { key: string }) {
+  async get(args: { key: string }): Promise<ProviderKey | null> {
     const { key } = args;
-    return await this.prismaService.providerKey.findUnique({
+    const providerKey = await this.prismaService.providerKey.findUnique({
       where: {
         key,
       },
     });
+    return providerKey;
   }
 
   async list(args: { user: User }) {

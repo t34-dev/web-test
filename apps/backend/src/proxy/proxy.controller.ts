@@ -3,12 +3,14 @@ import {
   Controller,
   Get,
   Put,
+  Req,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreateProxyDto, ProxyDto } from './proxy.dto';
 import { ProxyService } from './proxy.service';
 import { ProviderKeyService } from '../providerKey';
 import { UserService } from '../user/user.service';
+import { type Request } from 'express';
 
 @Controller('proxy')
 export class ProxyController {
@@ -19,12 +21,8 @@ export class ProxyController {
   ) {}
 
   @Put()
-  async create(@Body() createProxyDto: CreateProxyDto) {
-    const apikey = '123';
-    const providerKey = await this.providerKeyService.get(apikey);
-    if (providerKey === null) {
-      throw new UnauthorizedException();
-    }
+  async create(@Req() req: Request, @Body() createProxyDto: CreateProxyDto) {
+    const providerKey = await this.getProviderApiKey(req);
     const user = await this.userService.get({ id: providerKey.userId });
     await this.proxyService.create({ user, createProxyDto });
   }
@@ -33,5 +31,17 @@ export class ProxyController {
   async list() {
     const proxies = await this.proxyService.list();
     return proxies.map(v => ProxyDto.create(v));
+  }
+
+  private async getProviderApiKey(req: Request) {
+    const key = req.get('X-Therpc-Provider-Key');
+    if (key === undefined) {
+      throw new UnauthorizedException();
+    }
+    const providerKey = await this.providerKeyService.get({ key });
+    if (providerKey === null) {
+      throw new UnauthorizedException();
+    }
+    return providerKey;
   }
 }
