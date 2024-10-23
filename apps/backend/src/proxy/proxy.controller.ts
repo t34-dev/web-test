@@ -11,6 +11,7 @@ import { ProxyService } from './proxy.service';
 import { ProviderKeyService } from '../providerKey';
 import { UserService } from '../user/user.service';
 import { type Request } from 'express';
+import { ApiBody, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 
 @Controller('proxy')
 export class ProxyController {
@@ -21,6 +22,9 @@ export class ProxyController {
   ) {}
 
   @Put()
+  @ApiBody({ type: CreateProxyDto })
+  @ApiResponse({ type: ProxyDto })
+  @ApiUnauthorizedResponse()
   async create(@Req() req: Request, @Body() createProxyDto: CreateProxyDto) {
     const providerKey = await this.getProviderApiKey(req);
     const user = await this.userService.get({ id: providerKey.userId });
@@ -28,6 +32,7 @@ export class ProxyController {
   }
 
   @Get()
+  @ApiResponse({ type: [ProxyDto] })
   async list() {
     const proxies = await this.proxyService.list();
     return proxies.map(v => ProxyDto.create(v));
