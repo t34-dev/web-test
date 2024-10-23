@@ -1,13 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { ClassConstructor, Transform } from 'class-transformer';
-import { IsBoolean, IsDefined, IsPort } from 'class-validator';
+import { IsBoolean, IsDefined, IsPort, IsString } from 'class-validator';
 import { selectConfig } from 'nest-typed-config';
 
 import { ConfigModuleFactory } from './config.module';
 
 @Injectable()
 export class Config {
-  @IsPort() public readonly PORT!: string;
+  @IsPort()
+  public readonly PORT!: string;
+
+  @IsString()
+  public readonly CLERK_SECRET_KEY!: string;
+
+  @IsString()
+  public readonly CLERK_PUBLISHABLE_KEY!: string;
 
   @IsDefined()
   @Transform(({ value }) => {
