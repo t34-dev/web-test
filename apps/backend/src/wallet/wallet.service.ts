@@ -1,123 +1,128 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { Web3Service } from '../web3/web3.service';
-import { MessageVersion, Wallet } from '@prisma/client';
-import { Address, Hex } from 'viem';
+import { WalletMessageVersion, User, Wallet } from '@prisma/client';
+import {
+  Hex,
+  isHex,
+  recoverTypedDataAddress,
+  TypedData,
+  TypedDataDomain,
+  validateTypedData,
+} from 'viem';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class WalletService {
-  constructor(
-    private readonly prismaService: PrismaService,
-    private readonly web3Service: Web3Service,
-  ) {}
+  public constructor(private readonly prismaService: PrismaService) {}
 
-  public async getTypedDataForSigning(userId: string) {
-    const wallet = await this.getNewWallet(userId);
+  public async create(args: { user: User }): Promise<Wallet> {
+    const { user } = args;
 
-    const typedDataForSigning = this.web3Service.getTypedDataForSigning(
-      wallet.createdAt.getTime() * 1000,
-    );
+    await this.prismaService.wallet.updateMany({
+      data: { deletedAt: new Date() },
+      where: { userId: user.id, deletedAt: null },
+    });
 
-    return { typedDataForSigning, wallet };
+    return await this.prismaService.wallet.create({
+      data: {
+        messageVersion: WalletMessageVersion.v1,
+        userId: user.id,
+        salt: randomBytes(16).toString('hex'),
+      },
+    });
   }
 
-  public async updateSignature(args: {
-    walletId: string;
-    address: Address;
+  public async update(args: {
+    wallet: Wallet;
     signature: Hex;
   }): Promise<Wallet> {
-    const { walletId, signature, address } = args;
+    const { signature, wallet } = args;
 
-    const wallet = await this.prismaService.wallet.findUnique({
-      where: {
-        id: walletId,
-      },
-    });
+    const msg = this.getTypedMessage({ wallet });
 
-    if (!wallet) {
-      throw new Error();
+    let address;
+    try {
+      address = await recoverTypedDataAddress({ ...msg, signature });
+    } catch (e) {
+      throw new BadRequestException('Invalid signature', { cause: e });
     }
 
-    const isVerifySignature =
-      await this.web3Service.verifyAndRecoverTypedDataAddress({
-        timestamp: wallet.createdAt.getTime() * 1000,
-        address,
-        signature,
-      });
-
-    if (!isVerifySignature) {
-      throw new Error();
-    }
-
-    const walletForOtherUser = await this.prismaService.wallet.findFirst({
-      where: {
-        address,
-      },
+    await this.prismaService.wallet.updateMany({
+      data: { deletedAt: new Date() },
+      where: { address, deletedAt: null },
     });
 
-    if (walletForOtherUser) {
-      await this.deleteWallet(walletId);
-    }
-
-    return await this.prismaService.wallet.update({
-      where: {
-        id: walletId,
-      },
-      data: {
-        signature,
-        address,
-      },
+    await this.prismaService.wallet.update({
+      data: { signature, address },
+      where: { id: wallet.id },
     });
+
+    return wallet;
   }
 
-  public async getWallets(userId: string): Promise<Wallet[]> {
-    return await this.prismaService.wallet.findMany({
+  public async get(args: { user: User }): Promise<Wallet | null> {
+    const { user } = args;
+
+    const userWallet = await this.prismaService.wallet.findFirst({
       where: {
-        userId,
-        NOT: {
-          deletedAt: null,
-        },
+        userId: user.id,
+        deletedAt: null,
       },
     });
+
+    return userWallet ?? null;
   }
 
-  public async deleteWallet(walletId: string): Promise<Wallet> {
-    return await this.prismaService.wallet.update({
-      where: {
-        id: walletId,
-      },
-      data: {
-        deletedAt: new Date(),
-      },
-    });
-  }
+  public getTypedMessage(args: { wallet: Wallet }) {
+    const { wallet } = args;
+    const v1MessgeContent = `Dear user,
 
-  private async getNewWallet(userId: string): Promise<Wallet> {
-    const wallets = await this.prismaService.wallet.findMany({
-      where: {
-        userId,
-        NOT: {
-          deletedAt: null,
-        },
-      },
-    });
+To verify that you are the owner of this wallet, we kindly ask you to sign this message. This process helps us ensure the security of your account and confirm that this wallet is genuinely linked to you.
 
-    if (wallets.length > 20) {
-      // TODO: add softDelete
+Important:
+
+ • This action is completely free.
+ • It does not involve any transaction or transfer of assets.
+ • Signing this message does not provide any third party access to your funds.
+
+Please sign the message to complete the verification.
+
+Thank you for your cooperation!
+`;
+
+    const salt = `0x${wallet.salt}`;
+    if (!isHex(salt)) {
       throw new Error();
     }
+    const domain: TypedDataDomain = {
+      name: 'Attach wallet to user',
+      version: WalletMessageVersion.v1,
+      salt,
+    } as const;
 
-    const walletsWithoutAddress = wallets.filter(
-      wallet => wallet.address !== null,
-    );
+    const types: TypedData = {
+      Login: [
+        { name: 'content', type: 'string' },
+        { name: 'timestamp', type: 'string' },
+      ],
+    } as const;
 
-    return walletsWithoutAddress.length === 0
-      ? await this.prismaService.wallet.create({
-          data: {
-            messageVersion: MessageVersion.v1,
-            userId,
-          },
-        })
-      : walletsWithoutAddress[0]!;
+    const msg = {
+      domain: domain,
+      types: types,
+      primaryType: 'Login',
+      message: {
+        content: v1MessgeContent,
+        timestamp: wallet.createdAt.toISOString(),
+      },
+    } as const;
+
+    try {
+      validateTypedData(msg);
+    } catch (e) {
+      throw new Error('Invalid message', { cause: e });
+    }
+
+    return msg;
   }
 }

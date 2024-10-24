@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Get,
-  Put,
+  Post,
   Req,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -21,7 +21,7 @@ export class ProxyController {
     private readonly userService: UserService,
   ) {}
 
-  @Put()
+  @Post()
   @ApiBody({ type: CreateProxyDto })
   @ApiResponse({ type: ProxyDto })
   @ApiUnauthorizedResponse()

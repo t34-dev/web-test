@@ -64,15 +64,16 @@ model Proxy {
   @@index([deletedAt, id])
 }
 
-enum MessageVersion {
+enum WalletMessageVersion {
   v1
 }
 
 model Wallet {
-  id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  messageVersion MessageVersion
+  id             String               @id @default(auto()) @map("_id") @db.ObjectId
   signature      String?
   address        String?
+  salt           String               @unique
+  messageVersion WalletMessageVersion
 
   userId String @db.ObjectId
   user   User   @relation(fields: [userId], references: [id])
@@ -80,4 +81,7 @@ model Wallet {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  @@unique([userId, deletedAt]) // у пользователя только 1 активный кошелёк
+  @@unique([address, deletedAt]) // только один активный кошелёк с данным адресом
 }

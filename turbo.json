@@ -12,12 +12,12 @@
     },
     "lint": {},
     "dev": {
-      "dependsOn": ["generate"],
+      "dependsOn": ["^build", "generate"],
       "cache": false,
       "persistent": true
     },
     "dev:debug": {
-      "dependsOn": ["generate"],
+      "dependsOn": ["^build", "generate"],
       "cache": false,
       "persistent": true
     },

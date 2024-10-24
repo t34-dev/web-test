@@ -10,14 +10,13 @@ export const AuthUserId = createParamDecorator(getClerkUserId);
 function getClerkAuth(
   _: undefined,
   context: ExecutionContext,
-): typeof signedInAuth {
+): { userId: string; sessionId: string } {
   const request = context.switchToHttp().getRequest();
   const auth = getAuth(request);
   if (auth.userId === null) {
     throw new Error('User is not authenticated');
   }
-  const signedInAuth = auth;
-  return signedInAuth;
+  return auth;
 }
 
 function getClerkUserId(_: undefined, context: ExecutionContext): ClerkUserId {

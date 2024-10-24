@@ -3,14 +3,39 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "./dist/**"
+  ],
   "exports": {
-    ".": ["./src/index.ts"]
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./*": {
+      "import": "./dist/*.js",
+      "require": "./dist/*.js"
+    },
+    "./package.json": {
+      "default": "./package.json"
+    }
   },
   "scripts": {
+    "build": "tsup",
+    "clean": "rm -rf dist",
+    "dev": "tsup --watch --onSuccess \"node ./dist/index.js\"",
     "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "nestjs-zod": "4.1.0",
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*"
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.24",
+    "tsup": "^8.0.2"
   }
 }
