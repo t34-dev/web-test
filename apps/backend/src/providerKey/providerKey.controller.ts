@@ -18,9 +18,12 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
-import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
+import {
+  ClerkUserId,
+  UseClerkGuard,
+  type ClerkUserIdType,
+} from '../auth/clerk';
 import { ProviderKeyDto, DeleteProviderKeyParamsDto } from './providerKey.dto';
-import { UseClerkGuard } from '../auth/clerk.guard';
 
 @Controller('providerKeys')
 @UseClerkGuard()

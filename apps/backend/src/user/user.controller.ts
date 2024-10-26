@@ -8,8 +8,11 @@ import {
 } from '@nestjs/swagger';
 import { UpdateUserDto, UserDto } from './user.dto';
 import { UserService } from './user.service';
-import { type ClerkUserIdType, ClerkUserId } from '../auth/clerk';
-import { UseClerkGuard } from '../auth/clerk.guard';
+import {
+  type ClerkUserIdType,
+  ClerkUserId,
+  UseClerkGuard,
+} from '../auth/clerk';
 
 @Controller('user')
 @UseClerkGuard()

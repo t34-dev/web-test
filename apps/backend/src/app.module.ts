@@ -17,6 +17,9 @@ import { ProxyModule } from './proxy/proxy.module';
 import { WalletModule } from './wallet/wallet.module';
 import { DenyAllGuard } from './auth/denyAll.guard';
 import { clerkMiddleware } from '@clerk/express';
+import { makeServicesGlobal } from './nestjs/makeServicesGlobal';
+import { ClerkGuard } from './auth/clerk';
+import { InternalKeyGuard } from './auth/internalKey';
 
 @Module({
   imports: [
@@ -31,7 +34,7 @@ import { clerkMiddleware } from '@clerk/express';
         ProxyModule,
         WalletModule,
       ],
-      [],
+      [...makeServicesGlobal([ClerkGuard, InternalKeyGuard])],
     ),
   ],
   providers: [

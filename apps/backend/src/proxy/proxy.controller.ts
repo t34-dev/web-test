@@ -15,9 +15,8 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { UseClerkGuard } from '../auth/clerk.guard';
-import { UseProviderKeyGuard } from '../auth/providerKey.guard';
-import { ProviderKey } from '../auth/providerKey';
+import { ProviderKey, UseProviderKeyGuard } from '../auth/providerKey';
+import { UseClerkGuard } from '../auth/clerk';
 
 @Controller('proxies')
 @ApiTags('proxies')

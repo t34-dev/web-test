@@ -17,11 +17,24 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
+import {
+  ClerkGuard,
+  ClerkUserId,
+  ClerkUserIdNullable,
+  type ClerkUserIdNullableType,
+  UseClerkGuard,
+  type ClerkUserIdType,
+} from '../auth/clerk';
 import { ClientKeyDto, DeleteClientKeyParamsDto } from './clientKey.dto';
+import { UseOneOfGuard } from '../auth/oneOf';
+import {
+  InternalKey,
+  InternalKeyGuard,
+  InternalKeyType,
+} from '../auth/internalKey';
 
-@Controller('clientKey')
-@ApiTags('clientKey')
+@Controller('clientKeys')
+@ApiTags('clientKeys')
 @ApiBearerAuth()
 export class ClientKeyController {
   constructor(
@@ -30,6 +43,7 @@ export class ClientKeyController {
   ) {}
 
   @Post()
+  @UseClerkGuard()
   @ApiResponse({ type: ClientKeyDto })
   @ApiUnauthorizedResponse()
   public async create(@ClerkUserId() clerkUserId: ClerkUserIdType) {
@@ -39,15 +53,31 @@ export class ClientKeyController {
   }
 
   @Get()
+  @UseOneOfGuard(ClerkGuard, InternalKeyGuard)
   @ApiResponse({ type: ClientKeyDto })
   @ApiUnauthorizedResponse()
-  public async list(@ClerkUserId() clerkUserId: ClerkUserIdType) {
-    const user = await this.userService.get({ clerkUserId });
-    const clientKey = await this.clientKeyService.list({ user });
-    return ClientKeyDto.create(clientKey);
+  public async list(
+    @ClerkUserIdNullable() clerkUserId: ClerkUserIdNullableType,
+    @InternalKey() internalKey: InternalKeyType | null,
+  ) {
+    let clientKeys;
+    switch (true) {
+      case clerkUserId !== null:
+        const user = await this.userService.get({ clerkUserId });
+        clientKeys = await this.clientKeyService.list({ user });
+        break;
+      case internalKey !== null:
+        clientKeys = await this.clientKeyService.list({});
+        break;
+      default:
+        throw new Error();
+    }
+
+    return clientKeys.map(v => ClientKeyDto.create(v));
   }
 
   @Delete(':id')
+  @UseClerkGuard()
   @ApiParam({ name: 'id', type: String })
   @ApiOkResponse()
   @ApiUnauthorizedResponse()

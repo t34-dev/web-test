@@ -18,14 +18,17 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { WalletService } from './wallet.service';
-import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
+import {
+  ClerkUserId,
+  UseClerkGuard,
+  type ClerkUserIdType,
+} from '../auth/clerk';
 import {
   UpdateWalletBodyDto,
   UpdateWalletParamsDto,
   WalletDto,
 } from '@repo/common';
 import { isHex } from 'viem';
-import { UseClerkGuard } from '../auth/clerk.guard';
 
 @Controller('wallets')
 @UseClerkGuard()

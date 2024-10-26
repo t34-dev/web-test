@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProxyDto } from './proxy.dto';
 import { User } from '@prisma/client';
+import { addMinutes } from 'date-fns';
 
 @Injectable()
 export class ProxyService {
@@ -29,7 +30,7 @@ export class ProxyService {
   async list() {
     return await this.prismaService.proxy.findMany({
       where: {
-        deletedAt: null,
+        updatedAt: addMinutes(new Date(), -5),
       },
     });
   }

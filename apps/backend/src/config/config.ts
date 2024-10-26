@@ -7,6 +7,9 @@ import { ConfigModuleFactory } from './config.module';
 
 @Injectable()
 export class Config {
+  @IsString()
+  public readonly INTERNAL_API_KEY!: string;
+
   @IsDefined()
   @Transform(({ value }) => {
     switch (value) {

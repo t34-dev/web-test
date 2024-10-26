@@ -18,15 +18,19 @@ export class ClientKeyService {
       data: {
         userId: user.id,
         key: crypto.randomUUID(),
+        deletedAt: null,
       },
     });
   }
 
-  public async list(args: { user: User }): Promise<ClientKey[]> {
+  public async list(args: Record<string, never>): Promise<ClientKey[]>;
+  public async list(args: { user: User }): Promise<ClientKey[]>;
+  public async list(args: { user?: User }): Promise<ClientKey[]> {
     const { user } = args;
     return await this.prismaService.clientKey.findMany({
       where: {
-        userId: user.id,
+        ...(user?.id && { userId: user?.id }),
+        deletedAt: null,
       },
     });
   }
@@ -35,6 +39,7 @@ export class ClientKeyService {
     const clientKey = await this.prismaService.clientKey.findUnique({
       where: {
         id,
+        deletedAt: null,
       },
     });
     if (clientKey === null) {
@@ -44,7 +49,10 @@ export class ClientKeyService {
   }
 
   public async delete(id: string) {
-    await this.prismaService.clientKey.delete({
+    await this.prismaService.clientKey.update({
+      data: {
+        deletedAt: new Date(),
+      },
       where: {
         id,
       },
