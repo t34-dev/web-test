@@ -22,6 +22,20 @@ export class Config {
     }
   })
   @IsBoolean()
+  public readonly WITH_SEED!: boolean;
+
+  @IsDefined()
+  @Transform(({ value }) => {
+    switch (value) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        throw new Error('Invalid value for ERRORS_WITH_STACKTRACE');
+    }
+  })
+  @IsBoolean()
   public readonly HELMET_ENABLED!: boolean;
 
   @IsPort()

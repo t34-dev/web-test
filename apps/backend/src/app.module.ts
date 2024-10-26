@@ -20,6 +20,7 @@ import { clerkMiddleware } from '@clerk/express';
 import { makeServicesGlobal } from './nestjs/makeServicesGlobal';
 import { ClerkGuard } from './auth/clerk';
 import { InternalKeyGuard } from './auth/internalKey';
+import { SeedService } from './seed.service';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { InternalKeyGuard } from './auth/internalKey';
     ),
   ],
   providers: [
+    SeedService,
     {
       provide: APP_GUARD,
       useClass: DenyAllGuard,
