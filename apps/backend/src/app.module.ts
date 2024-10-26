@@ -1,5 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { APP_FILTER, APP_PIPE } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { Config } from './config/config';
 import {
@@ -15,7 +15,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ClientKeyModule } from './clientKey/clientKey.module';
 import { ProxyModule } from './proxy/proxy.module';
 import { WalletModule } from './wallet/wallet.module';
-import { requireAuth } from '@clerk/express';
+import { DenyAllGuard } from './auth/denyAll.guard';
+import { clerkMiddleware } from '@clerk/express';
 
 @Module({
   imports: [
@@ -34,6 +35,10 @@ import { requireAuth } from '@clerk/express';
     ),
   ],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: DenyAllGuard,
+    },
     { provide: APP_PIPE, useClass: ZodValidationPipe },
     {
       inject: [Config],
@@ -47,7 +52,7 @@ import { requireAuth } from '@clerk/express';
   ],
 })
 export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(requireAuth()).forRoutes('*');
+  public configure(consumer: MiddlewareConsumer) {
+    consumer.apply(clerkMiddleware()).forRoutes('*');
   }
 }

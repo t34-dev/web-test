@@ -7,6 +7,20 @@ import { ConfigModuleFactory } from './config.module';
 
 @Injectable()
 export class Config {
+  @IsDefined()
+  @Transform(({ value }) => {
+    switch (value) {
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      default:
+        throw new Error('Invalid value for ERRORS_WITH_STACKTRACE');
+    }
+  })
+  @IsBoolean()
+  public readonly HELMET_ENABLED!: boolean;
+
   @IsPort()
   public readonly PORT!: string;
 

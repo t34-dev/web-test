@@ -9,7 +9,7 @@ export class ProxyService {
 
   async create(args: { user: User; createProxyDto: CreateProxyDto }) {
     const { createProxyDto, user } = args;
-    await this.prismaService.proxy.upsert({
+    return await this.prismaService.proxy.upsert({
       create: {
         userId: user.id,
         providerProxyId: createProxyDto.providerProxyId,

@@ -17,7 +17,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { AuthUserId, type ClerkUserId } from '../auth/clerk';
+import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
 import { ClientKeyDto, DeleteClientKeyParamsDto } from './clientKey.dto';
 
 @Controller('clientKey')
@@ -32,7 +32,7 @@ export class ClientKeyController {
   @Post()
   @ApiResponse({ type: ClientKeyDto })
   @ApiUnauthorizedResponse()
-  public async create(@AuthUserId() clerkUserId: ClerkUserId) {
+  public async create(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const clientKey = await this.clientKeyService.create({ user });
     return ClientKeyDto.create(clientKey);
@@ -41,7 +41,7 @@ export class ClientKeyController {
   @Get()
   @ApiResponse({ type: ClientKeyDto })
   @ApiUnauthorizedResponse()
-  public async list(@AuthUserId() clerkUserId: ClerkUserId) {
+  public async list(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const clientKey = await this.clientKeyService.list({ user });
     return ClientKeyDto.create(clientKey);
@@ -53,7 +53,7 @@ export class ClientKeyController {
   @ApiUnauthorizedResponse()
   @ApiForbiddenResponse()
   public async delete(
-    @AuthUserId() clerkUserId: ClerkUserId,
+    @ClerkUserId() clerkUserId: ClerkUserIdType,
     @Param() deleteClientKeyParamsDto: DeleteClientKeyParamsDto,
   ) {
     const user = await this.userService.get({ clerkUserId });

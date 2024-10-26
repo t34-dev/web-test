@@ -18,11 +18,13 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
-import { AuthUserId, type ClerkUserId } from '../auth/clerk';
+import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
 import { ProviderKeyDto, DeleteProviderKeyParamsDto } from './providerKey.dto';
+import { UseClerkGuard } from '../auth/clerk.guard';
 
-@Controller('providerKey')
-@ApiTags('providerKey')
+@Controller('providerKeys')
+@UseClerkGuard()
+@ApiTags('providerKeys')
 @ApiBearerAuth()
 export class ProviderKeyController {
   constructor(
@@ -33,7 +35,7 @@ export class ProviderKeyController {
   @Post()
   @ApiResponse({ type: ProviderKeyDto })
   @ApiUnauthorizedResponse()
-  async create(@AuthUserId() clerkUserId: ClerkUserId) {
+  async create(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const providerKey = await this.providerKeyService.create({ user });
     return ProviderKeyDto.create(providerKey);
@@ -42,7 +44,7 @@ export class ProviderKeyController {
   @Get()
   @ApiResponse({ type: [ProviderKeyDto] })
   @ApiUnauthorizedResponse()
-  async list(@AuthUserId() clerkUserId: ClerkUserId) {
+  async list(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const providerKeys = await this.providerKeyService.list({ user });
     return providerKeys.map(v => ProviderKeyDto.create(v));
@@ -54,7 +56,7 @@ export class ProviderKeyController {
   @ApiUnauthorizedResponse()
   @ApiNotFoundResponse()
   async delete(
-    @AuthUserId() clerkUserId: ClerkUserId,
+    @ClerkUserId() clerkUserId: ClerkUserIdType,
     @Param() deleteProviderKeyParamsDto: DeleteProviderKeyParamsDto,
   ) {
     const user = await this.userService.get({ clerkUserId });

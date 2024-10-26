@@ -24,7 +24,6 @@ export async function bootstrap<T>(appModule: Type<T>): Promise<void> {
     origin: ['https://therpc.io'],
     credentials: true,
   });
-  app.use(helmet());
   app.use(compression());
   app.enableVersioning({
     defaultVersion: '1',
@@ -39,6 +38,9 @@ export async function bootstrap<T>(appModule: Type<T>): Promise<void> {
   await app.init();
 
   const config = app.get(Config);
+  if (config.HELMET_ENABLED) {
+    app.use(helmet());
+  }
 
   await app.listen(config.PORT);
   Logger.log(`Listening on port http://localhost:${config.PORT}`);

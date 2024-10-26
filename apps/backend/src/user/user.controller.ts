@@ -8,9 +8,11 @@ import {
 } from '@nestjs/swagger';
 import { UpdateUserDto, UserDto } from './user.dto';
 import { UserService } from './user.service';
-import { type ClerkUserId, AuthUserId } from '../auth/clerk';
+import { type ClerkUserIdType, ClerkUserId } from '../auth/clerk';
+import { UseClerkGuard } from '../auth/clerk.guard';
 
 @Controller('user')
+@UseClerkGuard()
 @ApiTags('user')
 @ApiBearerAuth()
 export class UserController {
@@ -21,7 +23,7 @@ export class UserController {
   @ApiResponse({ type: UserDto })
   @ApiUnauthorizedResponse()
   async update(
-    @AuthUserId() clerkUserId: ClerkUserId,
+    @ClerkUserId() clerkUserId: ClerkUserIdType,
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const user = await this.userService.get({ clerkUserId });

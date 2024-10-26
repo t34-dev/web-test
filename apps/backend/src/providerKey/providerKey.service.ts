@@ -19,6 +19,7 @@ export class ProviderKeyService {
       data: {
         userId: user.id,
         key: crypto.randomUUID(),
+        deletedAt: null,
       },
     });
   }
@@ -38,7 +39,7 @@ export class ProviderKeyService {
     }
 
     return await this.prismaService.providerKey.findUnique({
-      where: filter,
+      where: { ...filter, deletedAt: null },
     });
   }
 

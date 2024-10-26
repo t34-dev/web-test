@@ -1,11 +1,11 @@
 import { getAuth } from '@clerk/express';
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 
-export type ClerkUser = ReturnType<typeof getClerkAuth>;
-export const Auth = createParamDecorator(getClerkAuth);
+export type ClerkUserType = ReturnType<typeof getClerkAuth>;
+export const ClerkUser = createParamDecorator(getClerkAuth);
 
-export type ClerkUserId = ReturnType<typeof getClerkAuth>['userId'];
-export const AuthUserId = createParamDecorator(getClerkUserId);
+export type ClerkUserIdType = ReturnType<typeof getClerkAuth>['userId'];
+export const ClerkUserId = createParamDecorator(getClerkUserId);
 
 function getClerkAuth(
   _: undefined,
@@ -19,7 +19,10 @@ function getClerkAuth(
   return auth;
 }
 
-function getClerkUserId(_: undefined, context: ExecutionContext): ClerkUserId {
+function getClerkUserId(
+  _: undefined,
+  context: ExecutionContext,
+): ClerkUserIdType {
   const clerkAuthUser = getClerkAuth(_, context);
   return clerkAuthUser.userId;
 }

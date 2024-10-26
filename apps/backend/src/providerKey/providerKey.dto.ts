@@ -1,7 +1,11 @@
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
-const providerKeySchema = z.object({});
+const providerKeySchema = z.object({
+  id: z.string(),
+  key: z.string(),
+  deletedAt: z.date().nullable(),
+});
 
 export class ProviderKeyDto extends createZodDto(providerKeySchema) {}
 

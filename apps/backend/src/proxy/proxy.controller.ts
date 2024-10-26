@@ -3,17 +3,25 @@ import {
   Controller,
   Get,
   Post,
-  Req,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreateProxyDto, ProxyDto } from './proxy.dto';
 import { ProxyService } from './proxy.service';
 import { ProviderKeyService } from '../providerKey';
 import { UserService } from '../user/user.service';
-import { type Request } from 'express';
-import { ApiBody, ApiResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { UseClerkGuard } from '../auth/clerk.guard';
+import { UseProviderKeyGuard } from '../auth/providerKey.guard';
+import { ProviderKey } from '../auth/providerKey';
 
-@Controller('proxy')
+@Controller('proxies')
+@ApiTags('proxies')
+@ApiUnauthorizedResponse()
 export class ProxyController {
   public constructor(
     private readonly proxyService: ProxyService,
@@ -22,31 +30,30 @@ export class ProxyController {
   ) {}
 
   @Post()
+  @UseProviderKeyGuard()
   @ApiBody({ type: CreateProxyDto })
   @ApiResponse({ type: ProxyDto })
   @ApiUnauthorizedResponse()
-  async create(@Req() req: Request, @Body() createProxyDto: CreateProxyDto) {
-    const providerKey = await this.getProviderApiKey(req);
+  async create(
+    @ProviderKey() providerKeyHeader: string,
+    @Body() createProxyDto: CreateProxyDto,
+  ) {
+    const providerKey = await this.providerKeyService.get({
+      key: providerKeyHeader,
+    });
+    if (providerKey === null) {
+      throw new UnauthorizedException();
+    }
     const user = await this.userService.get({ id: providerKey.userId });
-    await this.proxyService.create({ user, createProxyDto });
+    const proxy = await this.proxyService.create({ user, createProxyDto });
+    return ProxyDto.create(proxy);
   }
 
   @Get()
+  @UseClerkGuard()
   @ApiResponse({ type: [ProxyDto] })
   async list() {
     const proxies = await this.proxyService.list();
     return proxies.map(v => ProxyDto.create(v));
-  }
-
-  private async getProviderApiKey(req: Request) {
-    const key = req.get('X-Therpc-Provider-Key');
-    if (key === undefined) {
-      throw new UnauthorizedException();
-    }
-    const providerKey = await this.providerKeyService.get({ key });
-    if (providerKey === null) {
-      throw new UnauthorizedException();
-    }
-    return providerKey;
   }
 }

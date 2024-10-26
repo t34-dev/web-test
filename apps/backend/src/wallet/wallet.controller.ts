@@ -18,15 +18,17 @@ import {
 } from '@nestjs/swagger';
 import { UserService } from '../user/user.service';
 import { WalletService } from './wallet.service';
-import { AuthUserId, type ClerkUserId } from '../auth/clerk';
+import { ClerkUserId, type ClerkUserIdType } from '../auth/clerk';
 import {
   UpdateWalletBodyDto,
   UpdateWalletParamsDto,
   WalletDto,
 } from '@repo/common';
 import { isHex } from 'viem';
+import { UseClerkGuard } from '../auth/clerk.guard';
 
 @Controller('wallets')
+@UseClerkGuard()
 @ApiTags('wallets')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse()
@@ -38,7 +40,7 @@ export class WalletController {
 
   @Post()
   @ApiResponse({ type: WalletDto })
-  public async replace(@AuthUserId() clerkUserId: ClerkUserId) {
+  public async replace(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const wallet = await this.walletService.create({ user });
     const message = this.walletService.getTypedMessage({ wallet });
@@ -47,7 +49,7 @@ export class WalletController {
 
   @Get()
   @ApiResponse({ type: WalletDto })
-  public async get(@AuthUserId() clerkUserId: ClerkUserId) {
+  public async get(@ClerkUserId() clerkUserId: ClerkUserIdType) {
     const user = await this.userService.get({ clerkUserId });
     const wallet = await this.walletService.get({ user });
     if (wallet === null) {
@@ -62,7 +64,7 @@ export class WalletController {
   @ApiResponse({ type: WalletDto })
   @ApiNotFoundResponse()
   public async update(
-    @AuthUserId() clerkUserId: ClerkUserId,
+    @ClerkUserId() clerkUserId: ClerkUserIdType,
     @Body() updateWalletBodyDto: UpdateWalletBodyDto,
     @Param() updateWalletParamsDto: UpdateWalletParamsDto,
   ) {
