@@ -30,7 +30,7 @@ export class ProxyService {
   async list() {
     return await this.prismaService.proxy.findMany({
       where: {
-        updatedAt: addMinutes(new Date(), -5),
+        updatedAt: { gt: addMinutes(new Date(), -5) },
       },
     });
   }

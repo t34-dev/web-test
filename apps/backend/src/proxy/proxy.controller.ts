@@ -16,7 +16,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { ProviderKey, UseProviderKeyGuard } from '../auth/providerKey';
-import { UseClerkGuard } from '../auth/clerk';
+import { UseInternalKeyGuard } from '../auth/internalKey';
 
 @Controller('proxies')
 @ApiTags('proxies')
@@ -49,7 +49,7 @@ export class ProxyController {
   }
 
   @Get()
-  @UseClerkGuard()
+  @UseInternalKeyGuard()
   @ApiResponse({ type: [ProxyDto] })
   async list() {
     const proxies = await this.proxyService.list();
