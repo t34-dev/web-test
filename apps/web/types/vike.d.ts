@@ -1,4 +1,5 @@
-// types/vike.d.ts
+import { User } from "@clerk/clerk-sdk-node";
+
 declare global {
   namespace Vike {
     interface PageContext {
@@ -6,6 +7,10 @@ declare global {
         locale: "en" | "ru";
       };
       urlLogical: string;
+      clerkState?: {
+        user: User;
+        sessionId: string;
+      } | null;
     }
   }
 }

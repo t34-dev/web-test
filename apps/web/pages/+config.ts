@@ -7,7 +7,7 @@ export default {
   title: "My Vike App",
   description: "Demo showcasing Vike",
   extends: vikeReact,
-  passToClient: ["pageProps", "urlLogical", "locale"],
+  passToClient: ["pageProps", "urlLogical", "locale", "clerkState"],
   meta: {
     "color-scheme": {
       env: {
@@ -16,6 +16,9 @@ export default {
       },
       name: "color-scheme",
       content: "light dark",
+    },
+    onBeforeRender: {
+      env: { server: true },
     },
   },
 } satisfies Partial<CustomConfig>;

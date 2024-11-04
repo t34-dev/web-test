@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { QueryClient, QueryClientProvider, type DefaultOptions } from "@tanstack/react-query";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 
 // Настройки по умолчанию для всех запросов
 const defaultOptions: DefaultOptions = {
@@ -18,9 +18,9 @@ const defaultOptions: DefaultOptions = {
   },
 };
 
-export function QueryProvider({ children }: { children: ReactNode }) {
+export const QueryProvider: FC<PropsWithChildren> = ({ children }) => {
   // Создаем инстанс QueryClient для каждой сессии
   const [queryClient] = useState(() => new QueryClient({ defaultOptions }));
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
-}
+};

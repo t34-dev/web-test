@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { http, createConfig, WagmiProvider } from "wagmi";
 import { arbitrum, base, mainnet, optimism, polygon, sepolia } from "wagmi/chains";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
@@ -23,6 +23,6 @@ export const configRainbowkit = getDefaultConfig({
   },
 });
 
-export function WgmProvider({ children }: { children: React.ReactNode }) {
+export const WgmProvider: FC<PropsWithChildren> = ({ children }) => {
   return <WagmiProvider config={configRainbowkit}>{children}</WagmiProvider>;
-}
+};
