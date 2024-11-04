@@ -17,6 +17,9 @@
     "prisma:push": "turbo run prisma:push --filter=backend",
     "env:up": "turbo run env:up --filter=backend"
   },
+  "dependencies": {
+    "vike": "^0.4.199"
+  },
   "devDependencies": {
     "@types/eslint": "^9.6.1",
     "@repo/eslint-config": "workspace:*",
