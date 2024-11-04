@@ -5,8 +5,8 @@ import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
 import { Container } from "@/components/Container/Container";
 import { Link } from "@/components/Link/Link";
 import { Switcher2 } from "@/components/Switcher2/Switcher2";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import s from "./LayoutHeader.module.scss";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher/LanguageSwitcher";
 
 export const LayoutHeader = () => {
   const {

@@ -5,10 +5,10 @@ import { usePageContext } from "vike-react/usePageContext";
 export { Page };
 
 function Page() {
-  const pageContext = usePageContext();
-  const locale = pageContext.pageProps.locale;
+  const {
+    pageProps: { locale },
+  } = usePageContext();
 
-  console.log("pageContext", pageContext.pageProps);
   return (
     <div className="p-4">
       <div className="mb-4">
@@ -21,7 +21,7 @@ function Page() {
 
       <div className="space-y-4">
         <p>
-          <T k="common:agreement" default="I agree to terms" />
+          <T k="common:agreement" default="I agree to terms" params={{ terms: "Terms", privacy: "Privacy" }} />
         </p>
       </div>
     </div>

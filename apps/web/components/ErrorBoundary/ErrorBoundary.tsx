@@ -1,4 +1,3 @@
-// components/ErrorBoundary.tsx
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
@@ -26,11 +25,11 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="p-4 bg-red-50 border border-red-200 rounded">
+        <div>
           <h2 className="text-red-800">Something went wrong.</h2>
-          <details className="mt-2 text-red-700">
+          <details>
             <summary>Error details</summary>
-            <pre className="mt-2 text-sm">{this.state.error?.message}</pre>
+            <pre>{this.state.error?.message}</pre>
           </details>
         </div>
       );

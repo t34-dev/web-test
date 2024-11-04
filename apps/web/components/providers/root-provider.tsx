@@ -2,10 +2,10 @@ import React from "react";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { QueryProvider } from "./query-provider";
 import { I18nProvider } from "./i18-provider";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { WgmProvider } from "@/components/providers/wagmi-provider";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { MantineProvider } from "@/components/providers/ui-provider";
+import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 
 export function RootProvider({ children }: { children: React.ReactNode }) {
   return (

@@ -20,7 +20,6 @@ export const LayoutBody: FC<PropsWithChildren> = ({ children }) => {
           </div>
           <div className={s.nav}>
             <Link to="/">Welcome</Link>
-            <Link to="/todo">Туду</Link>
             <Link to="/star-wars">Data Fetching</Link>
             <Link to="/login">Login</Link>
             <Link to="/query">Query</Link>
