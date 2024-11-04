@@ -13,7 +13,8 @@ type BeforeRoutePageContext = {
 };
 
 const onBeforeRoute: OnBeforeRouteSync = (pageContext): { pageContext: BeforeRoutePageContext } => {
-  const { urlPathname } = pageContext;
+  const { urlPathname, headers } = pageContext;
+  console.log("onBeforeRoute:", headers);
   let urlLogical = urlPathname;
   let locale: SupportedLang = DEFAULT_LANG;
 
