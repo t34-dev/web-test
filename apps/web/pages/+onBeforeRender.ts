@@ -1,4 +1,3 @@
-// pages/+onBeforeRender.ts
 import { createClerkClient } from "@clerk/clerk-sdk-node";
 import type { PageContextServer } from "vike/types";
 
@@ -29,8 +28,6 @@ export async function onBeforeRender(pageContext: PageContextServer) {
     const sessionToken = getCookieValue(cookies, "__session");
 
     console.log("Headers:", pageContext.headers);
-    console.log("cookies", cookies);
-    console.log("sessionToken", sessionToken);
     if (!sessionToken) {
       return { pageContext: { clerkState: null } };
     }
