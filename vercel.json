@@ -2,7 +2,6 @@
   "version": 2,
   "functions": {
     "**/*": {
-      "runtime": "nodejs20",
       "memory": 1024,
       "maxDuration": 10
     }
@@ -22,5 +21,8 @@
       ]
     }
   ],
-  "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/api/server" }]
+  "rewrites": [{
+    "source": "/((?!assets/).*)",
+    "destination": "/api/server"
+  }]
 }
