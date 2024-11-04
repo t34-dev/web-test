@@ -6,6 +6,10 @@ import { renderPage } from 'vike/server'
  * @param {import('@vercel/node').VercelResponse} res
  */
 export default async function handler(req, res) {
+    if (req.url.endsWith('.pageContext.json')) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000'); // год
+    }
+
     const { url } = req;
     if (url === undefined) throw new Error('req.url is undefined');
 

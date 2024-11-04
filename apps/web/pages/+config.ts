@@ -21,6 +21,9 @@ export default {
       env: { server: true },
     },
   },
+  prerender: true,
+  clientRouting: true,
+  prefetchStaticAssets: "viewport",
 } satisfies Partial<CustomConfig>;
 
 type MetaConfig = {
