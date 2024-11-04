@@ -3,49 +3,7 @@ import { modifyUrl } from "vike/modifyUrl";
 import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
 import { DEFAULT_LANG, DEFAULT_NAMESPACE, Namespaces, SUPPORTED_LANGS, SupportedLang } from "@/i18n/constants";
-
-// Определяем структуру переводов
-interface Translations {
-  common: {
-    welcome: string;
-    agreement: string;
-    buttons: {
-      submit: string;
-      cancel: string;
-    };
-    // другие ключи
-  };
-  default: {
-    sign_in: string;
-    // другие ключи
-  };
-}
-
-// Тип для получения всех возможных путей к переводам
-type PathsToStringProps<T> = T extends string
-  ? []
-  : {
-      [K in Extract<keyof T, string>]: [K, ...PathsToStringProps<T[K]>];
-    }[Extract<keyof T, string>];
-
-// Тип для создания строки пути из массива
-type Join<T extends string[], D extends string> = T extends []
-  ? never
-  : T extends [infer F]
-    ? F
-    : T extends [infer F, ...infer R]
-      ? F extends string
-        ? `${F}${D}${Join<Extract<R, string[]>, D>}`
-        : never
-      : string;
-
-// Тип для всех возможных ключей переводов
-type TranslationKey = Join<PathsToStringProps<Translations>, ".">;
-
-// Тип для значений в переводах
-interface TranslationValues {
-  [key: string]: string | number | boolean | Date | null | undefined;
-}
+import { TranslationKey, TranslationValues, Translations } from "./types";
 
 export function useTypedTranslation(ns?: Namespaces | Namespaces[]) {
   const { urlPathname } = usePageContext();

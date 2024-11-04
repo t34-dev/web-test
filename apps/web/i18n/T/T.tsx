@@ -1,14 +1,10 @@
-// T.tsx
-import React, { ReactNode, ReactElement } from "react";
+import React, { ReactNode, ReactElement, FC } from "react";
 import { TOptions } from "i18next";
 import { Trans, useTranslation } from "react-i18next";
+import { TranslationKey, TranslationValues } from "@/i18n/types";
 
-interface TranslationValues {
-  [key: string]: string | number | boolean | Date | null | undefined;
-}
-
-interface TProps<TKeys extends string = string> {
-  k: TKeys;
+interface TProps {
+  k: TranslationKey;
   default?: string;
   params?: TranslationValues;
   html?: boolean;
@@ -17,14 +13,7 @@ interface TProps<TKeys extends string = string> {
   count?: number;
 }
 
-export function T<TKeys extends string = string>({
-  k,
-  default: defaultValue,
-  params,
-  html,
-  children,
-  count,
-}: TProps<TKeys>): JSX.Element {
+export const T: FC<TProps> = ({ k, default: defaultValue, params, html, children, count }) => {
   const { t } = useTranslation(k.split(":")[0]);
 
   if (children) {
@@ -48,4 +37,4 @@ export function T<TKeys extends string = string>({
   }
 
   return <>{translation}</>;
-}
+};

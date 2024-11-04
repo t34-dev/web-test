@@ -8,7 +8,9 @@
     "build": "npm run clean && vite build",
     "preview": "npm run clean && vite preview",
     "lint": "eslint .",
-    "generate-translations": "tsx scripts/generateTranslationKeys.ts"
+    "generate-translations": "shx rm -rf ./i18n/locales && tsx i18n/generate-locales.ts",
+    "generate-types": "tsx i18n/generate-types.ts",
+    "i18n": "npm run generate-translations && npm run generate-types"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.13.1",

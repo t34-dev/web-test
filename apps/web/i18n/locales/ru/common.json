@@ -1,1 +1,8 @@
-{"agreement":"Я согласен с {{terms}} и {{privacy}}","privacyLink":"!!!privacyLink","terms":"!!!условия","termsLink":"!!!терминыСсылка","welcome":"Добро пожаловать, {{name}}!"}
+{
+  "agreement": "Я согласен с {{terms}} и {{privacy}}",
+  "name": "ЗАКОН",
+  "privacyLink": "!!!privacyLink",
+  "terms": "!!!условия",
+  "termsLink": "!!!терминыСсылка",
+  "welcome": "Добро пожаловать, {{name}}!"
+}

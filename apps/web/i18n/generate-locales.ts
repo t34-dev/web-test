@@ -3,6 +3,7 @@ import path from "path";
 import axios from "axios";
 import { config } from "dotenv";
 import { fileURLToPath } from "url";
+import { SUPPORTED_LANGS, SUPPORTED_NAMESPACES } from "@/i18n/constants";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,10 +18,10 @@ try {
 }
 
 // Конфигурация i18n
-const API_KEY = process.env.VITE_I18NEXUS_API_KEY || "t-3QIfqCSgEFu7-11RKoww";
-const LANGUAGES = ["en", "ru"] as const;
-const NAMESPACES = ["default", "common"] as const;
-const BASE_PATH = path.resolve(__dirname, "../i18n/locales1");
+const API_KEY = process.env.VITE_I18NEXUS_API_KEY;
+const LANGUAGES = SUPPORTED_LANGS;
+const NAMESPACES = SUPPORTED_NAMESPACES;
+const BASE_PATH = path.resolve(__dirname, "../i18n/locales");
 
 type Language = (typeof LANGUAGES)[number];
 type Namespace = (typeof NAMESPACES)[number];

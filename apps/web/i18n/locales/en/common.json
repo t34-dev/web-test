@@ -1,1 +1,8 @@
-{"agreement":"I agree to the {{terms}} and {{privacy}}","privacyLink":"!!!privacyLink","terms":"!!!terms","termsLink":"!!!termsLink","welcome":"Welcome, {{name}}!"}
+{
+  "agreement": "I agree to the {{terms}} and {{privacy}}",
+  "name": "ZAKON",
+  "privacyLink": "!!!privacyLink",
+  "terms": "!!!terms",
+  "termsLink": "!!!termsLink",
+  "welcome": "Welcome, {{name}}!"
+}
