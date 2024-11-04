@@ -1,3 +1,26 @@
 {
+  "version": 2,
+  "functions": {
+    "**/*": {
+      "runtime": "nodejs20",
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    }
+  ],
   "rewrites": [{ "source": "/((?!assets/).*)", "destination": "/api/server" }]
 }
