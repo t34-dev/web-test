@@ -28,7 +28,6 @@ export async function onBeforeRender(pageContext: PageContextServer) {
     const cookies = pageContext.headers?.["cookie"];
     const sessionToken = getCookieValue(cookies, "__session");
 
-    console.log("Page Context:", pageContext);
     console.log("Headers:", pageContext.headers);
     console.log("cookies", cookies);
     console.log("sessionToken", sessionToken);
