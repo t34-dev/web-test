@@ -23,18 +23,27 @@ function decodeJWT(token: string) {
 }
 
 export async function onBeforeRender(pageContext: PageContextServer) {
+  const defaultRes = { pageContext: { clerkState: null } };
+
+  // Проверяем, является ли это первым рендером страницы
+  const isFirstRender = !pageContext.isClientSideNavigation;
+
   try {
+    // Если это клиентская навигация - пропускаем проверку куков
+    if (!isFirstRender) {
+      return defaultRes;
+    }
+
     const cookies = pageContext.headers?.["cookie"];
     const sessionToken = getCookieValue(cookies, "__session");
 
-    console.log("Headers:", pageContext.headers);
     if (!sessionToken) {
-      return { pageContext: { clerkState: null } };
+      return defaultRes;
     }
 
     const decodedToken = decodeJWT(sessionToken);
     if (!decodedToken?.sub || !decodedToken?.sid) {
-      return { pageContext: { clerkState: null } };
+      return defaultRes;
     }
 
     const user = await clerk.users.getUser(decodedToken.sub);
@@ -49,6 +58,6 @@ export async function onBeforeRender(pageContext: PageContextServer) {
     };
   } catch (error) {
     console.error("Auth error:", error);
-    return { pageContext: { clerkState: null } };
+    return defaultRes;
   }
 }
