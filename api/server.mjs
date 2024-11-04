@@ -26,9 +26,6 @@ export default async function handler(req, res) {
     const { body, statusCode, headers } = httpResponse;
     res.statusCode = statusCode;
 
-    // Устанавливаем заголовки из httpResponse
     headers.forEach(([name, value]) => res.setHeader(name, value));
-
-    // Отправляем тело ответа
     res.end(body);
 }

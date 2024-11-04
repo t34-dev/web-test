@@ -1,9 +1,6 @@
 // pages/+onBeforeRoute.ts
 import type { OnBeforeRouteSync } from "vike/types";
-
-const SUPPORTED_LANGS = ["en", "ru"] as const;
-type SupportedLang = (typeof SUPPORTED_LANGS)[number];
-const DEFAULT_LANG: SupportedLang = "en";
+import { DEFAULT_LANG, SUPPORTED_LANGS, SupportedLang } from "@/i18n/constants";
 
 type BeforeRoutePageContext = {
   pageProps: {
