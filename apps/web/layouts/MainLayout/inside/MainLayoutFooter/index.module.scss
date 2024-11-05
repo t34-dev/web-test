@@ -1,0 +1,15 @@
+@import "@common";
+
+$color: rgb(57 83 106);
+
+.wrap {
+  width: 100%;
+  background: rgba($color, 0.3);
+
+  &__content {
+    padding: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,44 @@
+@import "@common";
+
+$color: #39536a;
+
+.wrap {
+  background: rgba($color, 0.3);
+
+  &__content {
+    color: #fff;
+    height: 5rem;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.menu {
+  display: flex;
+  height: 100%;
+  padding: 0.6rem 0;
+
+  &__item {
+    background: rgba($color, 0.4);
+    display: flex;
+    height: 100%;
+    padding: 0 2rem;
+    align-items: center;
+
+    &:first-child {
+      border-top-left-radius: 0.3rem;
+      border-bottom-left-radius: 0.3rem;
+    }
+
+    &:last-child {
+      border-top-right-radius: 0.3rem;
+      border-bottom-right-radius: 0.3rem;
+    }
+  }
+
+  &__itemActive {
+    background: $color;
+  }
+}
