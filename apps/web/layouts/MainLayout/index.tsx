@@ -7,15 +7,14 @@ import clsx from "clsx";
 import React, { FC, PropsWithChildren, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { MainLayoutBody, MainLayoutFooter, MainLayoutHeader } from "@/layouts/MainLayout/inside";
+import { MainLayoutFooter, MainLayoutHeader } from "@/layouts/MainLayout/inside";
 
 import s from "./index.module.scss";
 import { RootProvider } from "@/components/providers/root-provider";
 import { usePageContext } from "vike-react/usePageContext";
 import { ScrollAreaX } from "@/components/ScrollAreaX";
 import { getPlace, Place } from "@/types/place";
-import { Loader } from "@mantine/core";
-import { InnerContent } from "@/layouts/InnerContent";
+import { CONST } from "@/const";
 
 interface MainLayoutProps {
   className?: string;
@@ -24,6 +23,7 @@ interface MainLayoutProps {
   classNameFooter?: string;
 }
 
+// MainLayout/index.tsx
 export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
   children,
   className,
@@ -34,19 +34,19 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
   const { vikeStore, urlLogical } = usePageContext();
   const [showNavigation, setShowNavigation] = useState(vikeStore.place !== Place.LOGIN);
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsFirstRender(false);
   }, []);
 
-  // Обновляем состояние при изменении URL
   useEffect(() => {
     setShowNavigation(getPlace(urlLogical) !== Place.LOGIN);
   }, [urlLogical]);
 
   return (
     <RootProvider>
-      <ScrollAreaX isFull>
+      <ScrollAreaX isFull ref={scrollRef}>
         <div className={clsx(s.wrap, className)}>
           <AnimatePresence>
             {showNavigation && (
@@ -62,14 +62,26 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
             )}
           </AnimatePresence>
 
-          <motion.div layout className={clsx(s.wrap__body, classNameBody)}>
-            <div className="page-transition-loader">
-              <Loader color="blue" size="xl" />
-            </div>
-            <MainLayoutBody className={clsx(classNameBody)}>
-              <InnerContent>{children}</InnerContent>
-            </MainLayoutBody>
-          </motion.div>
+          <div className={clsx(s.wrap__body, classNameBody)}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={urlLogical}
+                initial={isFirstRender ? false : { opacity: 0, scale: 0.99 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.99 }}
+                transition={{ duration: CONST.animation.duration }}
+                className={s.wrap__bodyContent}
+                onAnimationComplete={() => {
+                  if (scrollRef.current) {
+                    const event = new Event("resize");
+                    window.dispatchEvent(event);
+                  }
+                }}
+              >
+                {children}
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
           <AnimatePresence>
             {showNavigation && (

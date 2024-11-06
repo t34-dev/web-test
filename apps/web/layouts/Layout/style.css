@@ -5,7 +5,7 @@
 }
 
 .page-transition-loader {
-  position: fixed;
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -13,6 +13,7 @@
   visibility: hidden;
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   z-index: 1000;
+  pointer-events: none;
 }
 
 body.page-is-transitioning #page-content {

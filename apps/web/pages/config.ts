@@ -19,9 +19,9 @@ export const rootConfig = {
       env: { server: true },
     },
   },
-  prerender: true,
-  clientRouting: true,
-  prefetchStaticAssets: "viewport",
+  // prerender: true,
+  // clientRouting: true,
+  // prefetchStaticAssets: "viewport",
 } satisfies Partial<CustomConfig>;
 
 type MetaConfig = {

@@ -3,7 +3,8 @@ import { modifyUrl } from "vike/modifyUrl";
 import { navigate } from "vike/client/router";
 import { usePageContext } from "vike-react/usePageContext";
 import { DEFAULT_LANG, DEFAULT_NAMESPACE, Namespaces, SUPPORTED_LANGS, SupportedLang } from "@/i18n/constants";
-import { TranslationKey, TranslationValues, Translations } from "./types";
+import { TranslationKey, TranslationValues } from "./types";
+import { useLayoutStore } from "@/store";
 
 export function useTypedTranslation(ns?: Namespaces | Namespaces[]) {
   const { urlPathname } = usePageContext();
@@ -52,6 +53,7 @@ export function useTypedTranslation(ns?: Namespaces | Namespaces[]) {
     // Исправленная версия
     changeLocale: async (newLocale: string) => {
       if (isSupportedLocale(newLocale)) {
+        useLayoutStore.setState({ isLoadingPage: true });
         const pathname = newLocale === DEFAULT_LANG ? urlPathname : `/${newLocale}${urlPathname}`;
 
         const newUrl = modifyUrl(window.location.href, {

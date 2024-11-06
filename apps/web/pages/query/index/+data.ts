@@ -5,14 +5,22 @@ import { Todo } from "@/pages/query/types";
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export const data = async () => {
-  const config = useConfig();
+  try {
+    const config = useConfig();
+    const todoData = (await api.get("/todos/1")) as Todo;
 
-  const todoData = (await api.get("/todos/1")) as Todo;
+    if (!todoData) {
+      console.error("No data received from API");
+      return null;
+    }
 
-  config({
-    title: `Todo: ${todoData.title}`,
-  });
+    config({
+      title: `Todo: ${todoData.title}`,
+    });
 
-  // Минимизируем данные если нужно
-  return todoData;
+    return todoData;
+  } catch (error) {
+    console.error("Data fetching error:", error);
+    return null;
+  }
 };

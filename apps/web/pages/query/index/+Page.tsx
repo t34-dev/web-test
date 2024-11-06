@@ -2,24 +2,33 @@ import React from "react";
 import { useData } from "vike-react/useData";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/utils/api";
-import { useStore } from "@/store";
+import { useAppStore } from "@/store/appStore";
 import { Todo } from "@/pages/query/types";
-import { Data } from "@/pages/query/index/+data";
+import { Data } from "./+data";
 import { useTypedTranslation } from "@/i18n/useTypedTranslation";
 import { Button } from "@repo/ui";
 
 export default function Page() {
   const { t, formatDate, formatNumber, hasTranslation } = useTypedTranslation();
   const initialData = useData<Data>();
-  const count = useStore((state) => state.count);
-  const increment = useStore((state) => state.increment);
+  const count = useAppStore((state) => state.count);
+  const increment = useAppStore((state) => state.increment);
 
-  const { data, isLoading } = useQuery<Todo>({
+  const { data, isLoading, isError } = useQuery<Todo | null>({
     queryKey: ["todos"],
     queryFn: () => api.get("/todos/1"),
     initialData,
     staleTime: 1000 * 60,
+    retry: 1,
   });
+
+  if (isLoading) {
+    return <div className="p-4">Loading...</div>;
+  }
+
+  if (isError || !data) {
+    return <div className="p-4">Error loading data</div>;
+  }
 
   return (
     <div className="p-4">
@@ -29,27 +38,21 @@ export default function Page() {
         <Button onClick={increment}>Increment</Button>
       </div>
       <div>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Data from API:</h2>
-            <pre className="bg-gray-100 p-4 rounded">{JSON.stringify(data, null, 2)}</pre>
-            <div className="mt-4">
-              <p>Title: {data.title}</p>
-              <p>Completed: {data.completed ? "Yes" : "No"}</p>
-              <p>ID: {data.id}</p>
-              <p>User ID: {data.userId}</p>
-            </div>
-          </div>
-        )}
+        <h2 className="text-xl font-semibold mb-2">Data from API:</h2>
+        <pre className="bg-gray-100 p-4 rounded">{JSON.stringify(data, null, 2)}</pre>
+        <div className="mt-4">
+          <p>Title: {data?.title}</p>
+          <p>Completed: {data?.completed ? "Yes" : "No"}</p>
+          <p>ID: {data?.id}</p>
+          <p>User ID: {data?.userId}</p>
+        </div>
       </div>
       <hr />
 
       <div>
         {/* Типизированный перевод */}
         <h1>
-          {t("common.welcome", {
+          {t("common:welcome", {
             defaultValue: "Welcome!",
             params: { name: "John" },
           })}
@@ -62,7 +65,7 @@ export default function Page() {
         <p>Number: {formatNumber(1234567.89)}</p>
 
         {/* Проверка наличия перевода */}
-        {hasTranslation("common.buttons.submit") && <button>{t("common.buttons.submit")}</button>}
+        {hasTranslation("common:name") && <button>{t("common:name")}</button>}
       </div>
     </div>
   );
