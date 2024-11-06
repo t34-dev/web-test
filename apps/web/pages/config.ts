@@ -5,7 +5,7 @@ export const rootConfig = {
   title: "My Vike App",
   description: "Demo showcasing Vike",
   extends: vikeReact,
-  passToClient: ["pageProps", "urlLogical", "locale", "clerkState"],
+  passToClient: ["pageProps", "urlLogical", "locale", "clerkState", "vikeStore"],
   meta: {
     "color-scheme": {
       env: {

@@ -1,34 +1,26 @@
 @use '@common' as *;
 
-.rootScroll{}
+.rootScroll {}
+
 .wrap {
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  &__head{
+
+  &__head {
     flex: 0 0 auto;
-    opacity: 0;
-    transform: translateY(-100%);
-    transition: all 0.3s ease-in-out;
-    &__visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    overflow: hidden;
   }
-  &__body{
+
+  &__body {
     flex: 1 1 auto;
+    display: flex;
   }
-  &__footer{
+
+  &__footer {
     flex: 0 0 auto;
-    opacity: 0;
-    transform: translateY(100%);
-    transition: all 0.3s ease-in-out;
-    &__visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    overflow: hidden;
   }
 }
-

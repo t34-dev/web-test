@@ -1,5 +1,6 @@
 import { createClerkClient } from "@clerk/clerk-sdk-node";
 import type { PageContextServer } from "vike/types";
+import { getPlace, Place, VikeStore } from "@/types/place";
 
 const clerk = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY || import.meta.env.CLERK_SECRET_KEY,
@@ -24,12 +25,16 @@ function decodeJWT(token: string) {
 
 export async function onBeforeRender(pageContext: PageContextServer) {
   const isFirstRender = !pageContext.isClientSideNavigation;
+  const vikeStore: VikeStore = {
+    place: getPlace(pageContext.urlLogical),
+  };
 
   try {
     if (!isFirstRender) {
       return {
         pageContext: {
           clerkState: pageContext.clerkState,
+          vikeStore,
         },
       };
     }
@@ -38,26 +43,28 @@ export async function onBeforeRender(pageContext: PageContextServer) {
     const sessionToken = getCookieValue(cookies, "__session");
 
     if (!sessionToken) {
-      return { pageContext: { clerkState: null } };
+      return { pageContext: { clerkState: null, vikeStore } };
     }
 
     const decodedToken = decodeJWT(sessionToken);
     if (!decodedToken?.sub || !decodedToken?.sid) {
-      return { pageContext: { clerkState: null } };
+      return { pageContext: { clerkState: null, vikeStore } };
     }
 
     const user = await clerk.users.getUser(decodedToken.sub);
 
+    console.log(111, "onBeforeRender", vikeStore);
     return {
       pageContext: {
         clerkState: {
           user,
           sessionId: decodedToken.sid,
         },
+        vikeStore,
       },
     };
   } catch (error) {
     console.error("Auth error:", error);
-    return { pageContext: { clerkState: null } };
+    return { pageContext: { clerkState: null, vikeStore } };
   }
 }

@@ -1,0 +1,63 @@
+// InnerContent.module.scss
+@use '@common' as *;
+
+.wrap {
+  height: inherit;
+  align-items: stretch;
+  display: flex;
+  width: 100%;
+  padding: 2rem 0;
+  overflow: hidden;
+  transition: padding 0.3s ease-in-out;
+
+  // Состояние для логина
+  &_login {
+    padding: 0;
+  }
+
+  // Состояние для расширенного вида
+  &_expanded {
+    padding: 1rem 0;
+  }
+
+  &__in {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__left {
+    position: relative;
+    width: 30rem;
+    flex: 0 0 auto;
+    background: #ddd;
+    border-bottom-right-radius: 1rem;
+    border-top-right-radius: 1rem;
+    transition: all 0.3s ease-in-out;
+
+    // Состояние для логина
+    &_login {
+      width: 50rem;
+      border-radius: 0;
+    }
+
+    // Состояние для расширенного вида
+    &_expanded {
+      width: 40rem;
+      border-radius: 0.5rem;
+    }
+
+    &Bg {
+      background-color: inherit;
+      position: absolute;
+      right: 100%;
+      width: 1000rem;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  &__right {
+    flex: 1 1 auto;
+    padding-left: 2rem;
+  }
+}
