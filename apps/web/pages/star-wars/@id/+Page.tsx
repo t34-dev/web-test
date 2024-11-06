@@ -4,6 +4,11 @@ import type { Data } from "./+data.js";
 
 export default function Page() {
   const movie = useData<Data>();
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <h1>{movie.title}</h1>

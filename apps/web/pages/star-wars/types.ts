@@ -4,7 +4,11 @@ export type Movie = {
   release_date: string;
 };
 
-export type MovieDetails = Movie & {
-  director: string;
-  producer: string;
-};
+// types.ts
+export interface MovieDetails {
+  id: string;
+  title: string;
+  release_date: string;
+  director?: string;
+  producer?: string;
+}

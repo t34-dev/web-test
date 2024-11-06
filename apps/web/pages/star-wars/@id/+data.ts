@@ -7,24 +7,32 @@ import { useConfig } from "vike-react/useConfig";
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export const data = async (pageContext: PageContextServer) => {
-  // https://vike.dev/useConfig
-  const config = useConfig();
+  try {
+    const config = useConfig();
 
-  const response = await fetch(`https://brillout.github.io/star-wars/api/films/${pageContext.routeParams.id}.json`);
-  let movie = (await response.json()) as MovieDetails;
+    const response = await fetch(`https://brillout.github.io/star-wars/api/films/${pageContext.routeParams.id}.json`);
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      return null;
+    }
 
-  config({
-    // Set <title>
-    title: movie.title,
-  });
+    const movie = (await response.json()) as MovieDetails;
 
-  // We remove data we don't need because the data is passed to
-  // the client; we should minimize what is sent over the network.
-  movie = minimize(movie);
+    if (!movie) {
+      console.error("No movie data received");
+      return null;
+    }
 
-  return movie;
+    config({
+      title: movie.title,
+    });
+
+    return minimize(movie);
+  } catch (error) {
+    console.error("Failed to fetch movie:", error);
+    return null;
+  }
 };
-
 function minimize(movie: MovieDetails): MovieDetails {
   const { id, title, release_date, director, producer } = movie;
   return { id, title, release_date, director, producer };

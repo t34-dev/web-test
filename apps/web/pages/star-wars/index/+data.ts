@@ -1,30 +1,38 @@
 // https://vike.dev/data
 
-import type { Movie, MovieDetails } from "../types.js";
+import type { MovieDetails } from "../types.js";
 import { useConfig } from "vike-react/useConfig";
 
 export type Data = Awaited<ReturnType<typeof data>>;
 
 export const data = async () => {
-  // https://vike.dev/useConfig
-  const config = useConfig();
+  try {
+    const config = useConfig();
 
-  const response = await fetch("https://brillout.github.io/star-wars/api/films.json");
-  const moviesData = (await response.json()) as MovieDetails[];
+    const response = await fetch("https://brillout.github.io/star-wars/api/films/index.json");
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      return [];
+    }
 
-  config({
-    // Set <title>
-    title: `${moviesData.length} Star Wars Movies`,
-  });
+    const movies = (await response.json()) as MovieDetails[];
 
-  // We remove data we don't need because the data is passed to the client; we should
-  // minimize what is sent over the network.
-  return minimize(moviesData);
+    if (!movies || !Array.isArray(movies)) {
+      console.error("Invalid movies data received");
+      return [];
+    }
+
+    config({
+      title: "Star Wars Movies",
+    });
+
+    return movies.map(minimize);
+  } catch (error) {
+    console.error("Failed to fetch movies:", error);
+    return [];
+  }
 };
-
-function minimize(movies: MovieDetails[]): Movie[] {
-  return movies.map((movie) => {
-    const { title, release_date, id } = movie;
-    return { title, release_date, id };
-  });
+function minimize(movie: MovieDetails) {
+  const { id, title, release_date } = movie;
+  return { id, title, release_date };
 }
