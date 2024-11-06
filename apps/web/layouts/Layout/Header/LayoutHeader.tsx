@@ -2,7 +2,7 @@ import React from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { useTranslation } from "react-i18next";
 import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
-import { Container } from "@/components/Container/Container";
+import { Container } from "@/components/Container";
 import { Link } from "@/components/Link/Link";
 import { Switcher2 } from "@/components/Switcher2/Switcher2";
 import s from "./LayoutHeader.module.scss";

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import React, { FC } from "react";
 
 import s from "./index.module.scss";
-import { Container } from "@/components/Container/Container";
+import { Container } from "@/components/Container";
 
 interface MainLayoutFooterProps {
   className?: string;
@@ -10,10 +10,10 @@ interface MainLayoutFooterProps {
 
 export const MainLayoutFooter: FC<MainLayoutFooterProps> = ({ className }) => {
   return (
-    <div className={clsx(s.wrap, className)}>
+    <footer className={clsx(s.wrap, className)}>
       <Container>
         <div className={s.wrap__content}>TheRPC.io</div>
       </Container>
-    </div>
+    </footer>
   );
 };

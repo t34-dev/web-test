@@ -1,0 +1,17 @@
+
+
+.rootScroll {
+    position: absolute;
+    inset: 0;
+}
+
+.scrollbar {
+    &:hover {
+        .thumb{
+            background-color: rgba(1, 27, 45, 0.79);
+        }
+    }
+    .thumb{
+        background-color: rgba(2, 54, 91, 0.71);
+    }
+}

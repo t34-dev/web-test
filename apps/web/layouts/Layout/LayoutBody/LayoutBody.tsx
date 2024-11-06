@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from "react";
 import s from "./LayoutBody.module.scss";
-import { Container } from "@/components/Container/Container";
+import { Container } from "@/components/Container";
 import logoUrl from "@assets/logo.svg";
 import { Link } from "@/components/Link/Link";
 import { Loader } from "@mantine/core";

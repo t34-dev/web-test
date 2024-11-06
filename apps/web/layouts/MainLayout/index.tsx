@@ -11,6 +11,8 @@ import { MainLayoutBody, MainLayoutFooter, MainLayoutHeader } from "@/layouts/Ma
 import s from "./index.module.scss";
 import { RootProvider } from "@/components/providers/root-provider";
 import { usePageContext } from "vike-react/usePageContext";
+import { ScrollArea } from "@mantine/core";
+import { ScrollAreaX } from "@/components/ScrollAreaX";
 
 interface MainLayoutProps {
   className?: string;
@@ -27,15 +29,24 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
   classNameFooter,
 }) => {
   const pageContext = usePageContext();
-  const isTestPage = pageContext.urlLogical.startsWith("/test");
+  const isTestPage = pageContext.urlLogical.startsWith("/login");
 
   return (
     <RootProvider>
-      <div className={clsx(s.wrap, className)}>
-        {!isTestPage && <MainLayoutHeader className={clsx(classNameHeader)} />}
-        <MainLayoutBody className={clsx(classNameBody)}>{children}</MainLayoutBody>
-        {!isTestPage && <MainLayoutFooter className={clsx(classNameFooter)} />}
-      </div>
+      <ScrollAreaX
+        isFull
+        // type="always"
+      >
+        <div className={clsx(s.wrap, className)}>
+          <div className={clsx(s.wrap__head, isTestPage && s.wrap__head__visible)}>
+            <MainLayoutHeader className={clsx(classNameHeader)} />
+          </div>
+          <MainLayoutBody className={clsx(s.wrap__body, classNameBody)}>{children}</MainLayoutBody>
+          <div className={clsx(s.wrap__footer, isTestPage && s.wrap__footer__visible)}>
+            <MainLayoutFooter className={clsx(classNameFooter)} />
+          </div>
+        </div>
+      </ScrollAreaX>
     </RootProvider>
   );
 };
