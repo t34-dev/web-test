@@ -10,19 +10,19 @@
   overflow: hidden;
   transition: padding 0.3s ease-in-out;
 
-  // Состояние для логина
   &_login {
     padding: 0;
   }
 
-  // Состояние для расширенного вида
   &_expanded {
     padding: 1rem 0;
   }
 
   &__in {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    position: relative;
+    gap: 2rem; // Заменяем padding на gap для лучшей анимации
   }
 
   &__left {
@@ -32,15 +32,13 @@
     background: #ddd;
     border-bottom-right-radius: 1rem;
     border-top-right-radius: 1rem;
-    transition: all 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out, border-radius 0.3s ease-in-out;
 
-    // Состояние для логина
     &_login {
       width: 50rem;
       border-radius: 0;
     }
 
-    // Состояние для расширенного вида
     &_expanded {
       width: 40rem;
       border-radius: 0.5rem;
@@ -57,7 +55,30 @@
   }
 
   &__right {
-    flex: 1 1 auto;
-    padding-left: 2rem;
+    flex: 1;
+    min-width: 0;
+    position: relative;
+  }
+
+  &__toggleButton {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    z-index: 10;
+    padding: 0.5rem 1rem;
+    background: #ddd;
+    border: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background: darken(#ddd, 10%);
+    }
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
   }
 }
