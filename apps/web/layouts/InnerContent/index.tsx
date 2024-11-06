@@ -45,7 +45,6 @@ export const InnerContent: FC<PropsWithChildren> = ({ children }) => {
                 <Link to="/">Home</Link>
                 <Link to="/login">Login</Link>
                 <button onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? "Collapse" : "Expand"}</button>
-                <button onClick={() => setShowPanel(!showPanel)}>{showPanel ? "Hide Panel" : "Show Panel"}</button>
               </nav>
               <div className={s.wrap__leftBg} />
             </motion.div>
@@ -60,11 +59,9 @@ export const InnerContent: FC<PropsWithChildren> = ({ children }) => {
             ease: ANIMATION_EASE,
           }}
         >
-          {!showPanel && (
-            <button onClick={() => setShowPanel(true)} className={s.wrap__toggleButton}>
-              Show Panel
-            </button>
-          )}
+          <button onClick={() => setShowPanel(!showPanel)} className={s.wrap__toggleButton}>
+            {showPanel ? "Hide Panel" : "Show Panel"}
+          </button>
           {children}
         </motion.div>
       </Container>

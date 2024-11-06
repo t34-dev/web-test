@@ -1,5 +1,6 @@
 export const enum Place {
   MAIN,
+  BAR,
   LOGIN,
 }
 export interface VikeStore {
@@ -7,8 +8,10 @@ export interface VikeStore {
 }
 
 export const getPlace = (urlLogical?: string): Place => {
-  if (urlLogical?.startsWith("/login")) {
+  if (urlLogical === "/") {
+    return Place.MAIN;
+  } else if (urlLogical?.startsWith("/login")) {
     return Place.LOGIN;
   }
-  return Place.MAIN;
+  return Place.BAR;
 };

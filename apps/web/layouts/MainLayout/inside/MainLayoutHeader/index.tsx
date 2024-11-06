@@ -15,6 +15,10 @@ export const MainLayoutHeader: FC<PropsWithChildren<MainLayoutHeaderProps>> = ({
       <Container>
         <nav className={s.wrap__content}>
           <Link to="/">Home</Link>
+          <Link to="/query">Query</Link>
+          <Link to="/lang">Lang</Link>
+          <Link to="/star-wars">StarWars</Link>
+          <Link to="/profile">Profile</Link>
           <Link to="/login">Login</Link>
         </nav>
       </Container>
