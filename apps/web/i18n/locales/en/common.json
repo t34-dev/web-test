@@ -1,5 +1,7 @@
 {
   "agreement": "I agree to the {{terms}} and {{privacy}}",
+  "back": "Back",
+  "continue": "Continue",
   "name": "ZAKON",
   "privacyLink": "!!!privacyLink",
   "terms": "!!!terms",

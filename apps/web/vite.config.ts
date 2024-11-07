@@ -50,6 +50,7 @@ export default defineConfig({
       "@scss": resolve(__dirname, "./assets/scss"),
       "@base": resolve(__dirname, "./assets/scss/base"),
       "@common": resolve(__dirname, "./assets/scss/common"),
+      "@mixins": resolve(__dirname, "./assets/scss/common/mixins"),
     },
   },
   server: {

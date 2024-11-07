@@ -1,5 +1,7 @@
 {
   "agreement": "Я согласен с {{terms}} и {{privacy}}",
+  "back": "Назад",
+  "continue": "Продолжать",
   "name": "ЗАКОН",
   "privacyLink": "!!!privacyLink",
   "terms": "!!!условия",

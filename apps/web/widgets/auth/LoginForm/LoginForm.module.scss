@@ -1,0 +1,70 @@
+@use '@common' as *;
+
+.wrap {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	//border: 1px solid #ddd;
+	max-width: 50rem;
+	padding: 2rem 4rem 6rem;
+	gap: 3rem;
+}
+.header{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	&__logo{
+		display: block;
+		width: 100%;
+		max-width: 15rem;
+		svg{
+			transition: .4s;
+			width: 100%;
+			height: auto;
+			fill: var(--logo-color);
+			stroke: var(--logo-color);
+		}
+	}
+	&__title{
+		text-align: center;
+		margin: 0;
+	}
+	&__desc{
+		text-align: center;
+		margin: 0;
+	}
+}
+.content{
+	&__nav{
+		display: flex;
+		gap: 1rem;
+		width: 100%;
+		& > * {
+			width: 33.4%;
+		}
+	}
+}
+.or{
+	display: flex;
+	align-items: center;
+	width: 100%;
+	i{
+		width: 100%;
+		height: 1px;
+		background: #ddd;
+	}
+	div{
+		padding: 0 1rem;
+	}
+}
+.email{
+	display: flex;
+	flex-direction: column;
+	gap: 1.4rem;
+	&Input{
+		margin: 1rem 0;
+	}
+}
+.footer{
+	text-align: center;
+}

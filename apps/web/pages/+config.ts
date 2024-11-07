@@ -3,5 +3,5 @@ import { Layout } from "@/layouts/Layout/Layout";
 
 export default {
   ...rootConfig,
-  Layout: Layout,
+  Layout,
 } satisfies Partial<CustomConfig>;

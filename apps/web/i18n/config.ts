@@ -1,27 +1,31 @@
-// i18n.ts
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-// Импортируем JSON файлы напрямую
+// imports
 import common_en from "./locales/en/common.json";
 import common_ru from "./locales/ru/common.json";
 import default_en from "./locales/en/default.json";
 import default_ru from "./locales/ru/default.json";
+import auth_en from "./locales/en/auth.json";
+import auth_ru from "./locales/ru/auth.json";
 import { DEFAULT_LANG, DEFAULT_NAMESPACE, SUPPORTED_LANGS, SUPPORTED_NAMESPACES } from "@/i18n/constants";
 
-// Функция создания инстанса i18n с начальным языком
-export function createI18nInstance(initialLocale: string = "en") {
-  const i18nInstance = i18n.createInstance();
+let i18 = i18n.createInstance();
 
-  if (!i18nInstance.isInitialized) {
-    i18nInstance.use(initReactI18next).init({
+export function createI18nInstance(initialLocale: string = DEFAULT_LANG) {
+  i18 = i18n.createInstance();
+
+  if (!i18.isInitialized) {
+    i18.use(initReactI18next).init({
       resources: {
         en: {
           common: common_en,
           default: default_en,
+          auth: auth_en,
         },
         ru: {
           common: common_ru,
           default: default_ru,
+          auth: auth_ru,
         },
       },
       lng: initialLocale, // Устанавливаем начальный язык
@@ -46,8 +50,8 @@ export function createI18nInstance(initialLocale: string = "en") {
     });
   }
 
-  return i18nInstance;
+  return i18;
 }
-
+export { i18 };
 // Экспортируем функцию создания инстанса по умолчанию с английским языком
 export default createI18nInstance(DEFAULT_LANG);

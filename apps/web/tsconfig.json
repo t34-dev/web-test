@@ -31,6 +31,7 @@
       "@scss/*": ["./assets/scss/*"],
       "@base": ["./assets/scss/base/index.scss"],
       "@common": ["./assets/scss/common/index.scss"],
+      "@mixins": ["./assets/scss/common/mixins.scss"],
     }
   },
   "exclude": [

@@ -1,0 +1,31 @@
+@use '@common' as *;
+@use '@mixins' as *;
+
+.wrap {
+	display: flex;
+	width: 100%;
+	color: #fff;
+	max-width: 40rem;
+	&__left{
+		@include noneSelect;
+		flex: 0 0 auto;
+		svg{
+			fill: var(--bg-white-900);
+			width: 4rem;
+			height: auto;
+		}
+	}
+	&__right{
+		padding-left: 2.4rem;
+		display: flex;
+		flex-direction: column;
+		gap: .2rem;
+	}
+	&__title{
+		@include H6-Bold;
+	}
+	&__desc{
+		@include Body-1-Regular();
+		opacity: 0.7;
+	}
+}

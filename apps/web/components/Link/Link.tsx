@@ -1,12 +1,14 @@
 import React, { useRef, useEffect, PropsWithChildren, FC } from "react";
 import { usePageContext } from "vike-react/usePageContext";
 import { navigate } from "vike/client/router";
-import s from "./Link.module.scss";
+import clsx from "clsx";
 interface LinkProps {
   to: string;
+  className?: string;
+  classNameActive?: string;
 }
 
-export const Link: FC<PropsWithChildren<LinkProps>> = ({ to, children }) => {
+export const Link: FC<PropsWithChildren<LinkProps>> = ({ to, children, className, classNameActive }) => {
   const {
     urlPathname,
     pageProps: { locale },
@@ -40,7 +42,7 @@ export const Link: FC<PropsWithChildren<LinkProps>> = ({ to, children }) => {
   };
 
   return (
-    <a href={fullHref} className={isActive ? s.active : undefined} onClick={handleClick}>
+    <a href={fullHref} className={clsx(className, isActive && classNameActive)} onClick={handleClick}>
       {children}
     </a>
   );

@@ -32,7 +32,7 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
   classNameFooter,
 }) => {
   const { vikeStore, urlLogical } = usePageContext();
-  const [showNavigation, setShowNavigation] = useState(vikeStore.place !== Place.LOGIN);
+  const [showNavigation, setShowNavigation] = useState(vikeStore?.place !== Place.LOGIN);
   const [isFirstRender, setIsFirstRender] = useState(true);
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
