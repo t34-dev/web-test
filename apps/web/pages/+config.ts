@@ -1,7 +1,7 @@
 import { CustomConfig, rootConfig } from "@/pages/config";
-import { Layout } from "@/layouts/Layout/Layout";
+import { MainLayout } from "@/layouts/MainLayout";
 
 export default {
   ...rootConfig,
-  Layout,
+  Layout: MainLayout,
 } satisfies Partial<CustomConfig>;

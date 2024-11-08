@@ -4,6 +4,7 @@ import { Anchor, Button, CloseButton, Input } from "@mantine/core";
 import { motion } from "framer-motion";
 import { LogoIcon } from "@/components/icons/LogoIcon";
 import { T } from "@/i18n/T/T";
+import { PageLoader } from "../../../components/loading/PageLoader";
 
 const transition = {
   type: "spring",

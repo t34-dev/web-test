@@ -3,7 +3,7 @@ import React from "react";
 import { MiniTriggerProps } from "@/components/auth/MiniTrigger";
 import { TranslationKey } from "@/i18n/types";
 
-interface MiniTriggerType extends Omit<MiniTriggerProps, "title, desc"> {
+interface MiniTriggerType extends Pick<MiniTriggerProps, "icon"> {
   title: TranslationKey;
   desc: TranslationKey;
 }

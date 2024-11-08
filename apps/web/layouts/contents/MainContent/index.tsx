@@ -1,11 +1,11 @@
 import React, { FC, PropsWithChildren } from "react";
-import { LoaderX } from "@/components/LoaderX";
+import { PageLoader } from "../../../components/loading/PageLoader";
 
 export const MainContent: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {children}
-      <LoaderX fixed />
+      <PageLoader fixed />
     </>
   );
 };

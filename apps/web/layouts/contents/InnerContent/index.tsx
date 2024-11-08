@@ -3,7 +3,7 @@ import s from "./InnerContent.module.scss";
 import { Link } from "@/components/Link/Link";
 import clsx from "clsx";
 import { Container } from "@/components/Container";
-import { LoaderX } from "@/components/LoaderX";
+import { PageLoader } from "../../../components/loading/PageLoader";
 
 export const InnerContent: FC<PropsWithChildren> = ({ children }) => {
   return (
@@ -19,7 +19,7 @@ export const InnerContent: FC<PropsWithChildren> = ({ children }) => {
 
         <div className={s.wrap__right}>
           {children}
-          <LoaderX />
+          <PageLoader />
         </div>
       </Container>
     </div>

@@ -11,7 +11,7 @@ interface LoaderXProps {
   fixed?: boolean;
 }
 
-export const LoaderX: FC<LoaderXProps> = ({ fixed = false }) => {
+export const PageLoader: FC<LoaderXProps> = ({ fixed = false }) => {
   const { isLoadingPage } = useLayoutStore();
 
   return (
