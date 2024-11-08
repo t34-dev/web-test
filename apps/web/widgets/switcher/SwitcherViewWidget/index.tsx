@@ -4,5 +4,11 @@ import { SwitcherView } from "@/components/switchers/SwitcherView";
 
 export const SwitcherViewWidget: FC = () => {
   const [viewValue, setViewValue] = useState("list");
-  return <SwitcherView value={viewValue} list={viewData} onChange={(val) => setViewValue(val)} />;
+  return (
+    <SwitcherView
+      value={viewValue}
+      list={viewData}
+      onClick={() => setViewValue(viewValue === "list" ? "grid" : "list")}
+    />
+  );
 };

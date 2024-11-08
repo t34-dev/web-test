@@ -1,6 +1,12 @@
 @use '@common' as *;
+@use '@mixins' as *;
 
 .wrap {
-	display: flex;
-	flex: 0 0 auto;
+	@include noneSelect;
+	cursor: pointer;
+	&__elem{
+		display: flex;
+		flex: 0 0 auto;
+		pointer-events: none;
+	}
 }

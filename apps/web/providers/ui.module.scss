@@ -3,7 +3,10 @@
 .Input {
   &__input {
     &:focus-within {
-      outline: 2px solid var(--mantine-color-blue-filled);
+      outline: calc(2*0.0625rem * var(--mantine-scale)) solid var(--mantine-color-blue-filled);
+    }
+    &[data-error]{
+      border: calc(2*0.0625rem * var(--mantine-scale)) solid var(--input-bd);
     }
   }
 }
