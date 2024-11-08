@@ -1,7 +1,7 @@
 import React from "react";
 import { useTypedTranslation } from "@/i18n/useTypedTranslation";
 
-export function Switcher2() {
+export const SwitcherLang = () => {
   const { getCurrentLocale, changeLocale, getSupportedLocales } = useTypedTranslation();
 
   const currentLocale = getCurrentLocale();
@@ -16,4 +16,4 @@ export function Switcher2() {
       ))}
     </select>
   );
-}
+};

@@ -1,31 +1,47 @@
 @use '@common' as *;
 
 .wrap{
-  padding-top: 4rem;
+  padding: 4rem 0;
   &__in{
     display: flex;
     flex-direction: column;
     gap: 4rem;
   }
 }
-.header{
-  &__h1{
-    @include H3-Medium;
-    margin: 0;
-  }
-  &__desc{
-    @include Body-2-Regular;
-  }
-}
 .filters{
   display: flex;
   gap: 2rem;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  &__left{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1 1 auto;
+  }
+  &__right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
   &__network{
     width: 100%;
-    max-width: 30%;
+    max-width: 25%;
     min-width: 30rem;
   }
-  &__search{}
+  .filters__search {
+    width: 20rem;
+    transition: width 0.4s ease-out;
+    max-width: 40rem;
+
+    &:focus-within {
+      width: 100%;
+    }
+  }
+
+  .email__emailInput {
+    width: 100%;
+  }
 }
 .content{}

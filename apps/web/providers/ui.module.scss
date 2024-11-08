@@ -1,0 +1,9 @@
+@use '@common' as *;
+
+.Input {
+  &__input {
+    &:focus-within {
+      outline: 2px solid var(--mantine-color-blue-filled);
+    }
+  }
+}

@@ -2,6 +2,8 @@
 
 .table {
   width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
 
   th {
     text-align: left;
@@ -9,11 +11,28 @@
     position: sticky;
     top: 0;
     z-index: 1;
+    padding: 12px;
   }
 
   td {
+    background: #ddd;
     vertical-align: top;
     padding: 12px;
+    margin-bottom: 1px;
+  }
+
+  tr {
+    transform: translateZ(0); // Оптимизация рендеринга
+    will-change: transform; // Подсказка браузеру об анимациях
+  }
+  tbody {
+    tr {
+      transition: transform 0.2s ease-out;
+
+      &:hover {
+        background-color: var(--mantine-color-gray-0);
+      }
+    }
   }
 }
 

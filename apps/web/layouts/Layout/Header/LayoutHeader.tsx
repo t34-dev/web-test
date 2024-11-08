@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
 import { Container } from "@/components/Container";
 import { Link } from "@/components/Link/Link";
-import { Switcher2 } from "@/components/Switcher2/Switcher2";
+import { SwitcherLang } from "@/components/switchers/SwitcherLang";
 import s from "./LayoutHeader.module.scss";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher/LanguageSwitcher";
 
@@ -19,7 +19,7 @@ export const LayoutHeader = () => {
       <Container className={s.header__container}>
         <div className={s.header__logo}>
           <Link to="/">LOGO</Link>
-          <Switcher2 />
+          <SwitcherLang />
         </div>
         <div className={s.header__user}>
           <div className="mb-4">

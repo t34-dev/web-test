@@ -14,7 +14,7 @@ import { HeaderButtons } from "./HeaderButtons";
 import { motion } from "framer-motion";
 import { useTypedTranslation } from "@/i18n/useTypedTranslation";
 
-const transition = {
+export const transition = {
   type: "spring",
   duration: 0.2,
   bounce: 0.2,

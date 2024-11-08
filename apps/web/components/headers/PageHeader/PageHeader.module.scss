@@ -1,0 +1,11 @@
+@use '@common' as *;
+
+.header{
+  &__h1{
+    @include H3-Medium;
+    margin: 0;
+  }
+  &__desc{
+    @include Body-2-Regular;
+  }
+}

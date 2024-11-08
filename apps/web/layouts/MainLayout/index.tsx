@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { MainLayoutFooter, MainLayoutHeader } from "@/layouts/MainLayout/inside";
 
 import s from "./index.module.scss";
-import { RootProvider } from "@/components/providers/root-provider";
+import { RootProvider } from "@/providers/root-provider";
 import { usePageContext } from "vike-react/usePageContext";
 import { ScrollAreaX } from "@/components/ScrollAreaX";
 import { getPlace, Place } from "@/types/place";

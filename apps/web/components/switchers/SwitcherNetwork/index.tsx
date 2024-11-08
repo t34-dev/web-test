@@ -8,7 +8,7 @@ interface NetworkSegmentsProps {
   onChange: (val: string) => void;
 }
 
-export const NetworkSegments: FC<NetworkSegmentsProps> = ({ value, list = networksData, onChange }) => {
+export const SwitcherNetwork: FC<NetworkSegmentsProps> = ({ value, list = networksData, onChange }) => {
   return (
     <SegmentedControl
       fullWidth
