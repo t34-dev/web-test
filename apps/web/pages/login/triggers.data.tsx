@@ -8,7 +8,7 @@ interface MiniTriggerType extends Pick<MiniTriggerProps, "icon"> {
   desc: TranslationKey;
 }
 
-export const triggers: MiniTriggerType[] = [
+export const triggersData: MiniTriggerType[] = [
   {
     title: "auth:trigger_1_title",
     desc: "auth:trigger_1_desc",

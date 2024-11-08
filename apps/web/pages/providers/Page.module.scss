@@ -1,0 +1,31 @@
+@use '@common' as *;
+
+.wrap{
+  padding-top: 4rem;
+  &__in{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+}
+.header{
+  &__h1{
+    @include H3-Medium;
+    margin: 0;
+  }
+  &__desc{
+    @include Body-2-Regular;
+  }
+}
+.filters{
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  &__network{
+    width: 100%;
+    max-width: 30%;
+    min-width: 30rem;
+  }
+  &__search{}
+}
+.content{}

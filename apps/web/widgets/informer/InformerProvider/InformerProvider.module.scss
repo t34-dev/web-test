@@ -1,0 +1,10 @@
+@use '@common' as *;
+
+.wrap {
+	display: flex;
+	width: 100%;
+	gap: 2rem;
+	& > *{
+		width: 34%;
+	}
+}

@@ -6,7 +6,7 @@ import { LoginContent } from "@/layouts/contents/LoginContent";
 import { LoginFormWidget } from "@/widgets/auth/LoginForm";
 import s from "./Login.module.scss";
 import { Place } from "@/types/place";
-import { triggers } from "@/pages/login/triggers";
+import { triggersData } from "@/pages/login/triggers.data";
 import { MiniTrigger } from "@/components/auth/MiniTrigger";
 import { Logo } from "@/components/logo/Logo";
 import { Button } from "@mantine/core";
@@ -71,7 +71,7 @@ export default function Page() {
           </motion.header>
 
           <motion.section className={s.content}>
-            {triggers.map((trigger, index) => (
+            {triggersData.map((trigger, index) => (
               <motion.div key={trigger.title} variants={triggerVariants} custom={index}>
                 <MiniTrigger {...trigger} title={t(trigger.title)} desc={t(trigger.desc)} />
               </motion.div>

@@ -1,0 +1,62 @@
+@use '@common' as *;
+
+.table {
+  width: 100%;
+
+  th {
+    text-align: left;
+    background: var(--mantine-color-white);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  td {
+    vertical-align: top;
+    padding: 12px;
+  }
+}
+
+.nodeCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &Icon {
+    width: 32px;
+    height: 32px;
+    background: #eee;
+    border-radius: 50%;
+  }
+
+  &Info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &Stats {
+    display: flex;
+    gap: 8px;
+
+    &Active {
+      color: var(--mantine-color-green-6);
+    }
+
+    &Inactive {
+      color: var(--mantine-color-red-6);
+    }
+  }
+}
+
+.requests {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.endpoints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}

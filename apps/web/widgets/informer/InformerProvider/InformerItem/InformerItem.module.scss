@@ -1,0 +1,21 @@
+@use '@common' as *;
+
+.wrap {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 1.8rem 2.8rem;
+	background: #ddd;
+	border-radius: 1.8rem;
+	gap: .8rem;
+	&__title{
+		@include H5-Medium;
+	}
+	&__desc{
+		@include Body-2-Regular;
+		flex: 1 1 auto;
+	}
+	&__value{
+		@include H5-Medium;
+	}
+}
