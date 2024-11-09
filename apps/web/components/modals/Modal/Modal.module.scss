@@ -1,0 +1,55 @@
+// Modal.module.scss
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 100;
+}
+
+.modal {
+    position: fixed;
+    z-index: 101;
+    background: white;
+    border-radius: var(--mantine-radius-md);
+
+    &.center {
+        top: 50%;
+        left: 50%;
+        max-width: 26.5rem;
+        width: 90%;
+        max-height: 85vh;
+        overflow: auto;
+    }
+
+    &.left {
+        top: 0;
+        left: 0;
+        height: 100vh;
+        max-width: 54rem;
+        width: 90%;
+    }
+
+    &.right {
+        top: 0;
+        right: 0;
+        height: 100vh;
+        max-width: 54rem;
+        width: 90%;
+    }
+
+    &.top {
+        top: 0;
+        left: 0;
+        right: 0;
+        min-height: 10rem;
+        width: 100%;
+    }
+
+    &.bottom {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        min-height: 10rem;
+        width: 100%;
+    }
+}
