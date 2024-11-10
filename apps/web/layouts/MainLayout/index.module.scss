@@ -1,7 +1,5 @@
 @use '@common' as *;
 
-.rootScroll {}
-
 .wrap {
   width: 100%;
   min-height: 100vh;
@@ -13,7 +11,7 @@
     top: 0;
     z-index: 10;
     position: sticky;
-    box-shadow: 0 0 0.4rem rgb(0, 0, 0, 0.2);
+    //box-shadow: 0 0 0.1rem rgb(0, 0, 0, 0.1);
     flex: 0 0 auto;
     overflow: hidden;
   }

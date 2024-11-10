@@ -5,8 +5,8 @@
 	flex-direction: column;
 	width: 100%;
 	padding: 1.4rem 2.8rem;
-	background: rgb(255, 255, 255, .85);
-	color: #333;
+	background: var(--mantine-color-myColor-6);
+	color: #fff;
 	border-radius: 1.2rem;
 	gap: .8rem;
 	&__title{

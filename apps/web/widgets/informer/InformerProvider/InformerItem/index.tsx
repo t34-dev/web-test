@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import s from "./InformerItem.module.scss";
 
 export interface InformerItemProps {

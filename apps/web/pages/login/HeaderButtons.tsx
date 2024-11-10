@@ -10,6 +10,7 @@ import { usePageContext } from "vike-react/usePageContext";
 import clsx from "clsx";
 import { T } from "@/i18n/T/T";
 import { ModalX } from "@/components/modals/Modal";
+import { CustomLayout } from "@/components/modals/Modal/layouts";
 
 export function HeaderButtons() {
   const { isClientSideNavigation } = usePageContext();
@@ -41,7 +42,16 @@ export function HeaderButtons() {
         </Button>
       </div>
 
-      <ModalX opened={leftModalOpened} onClose={closeLeft} variant="center">
+      <ModalX
+        opened={leftModalOpened}
+        onClose={closeLeft}
+        variant="center"
+        // layout={CustomLayout}
+        // layoutProps={{
+        //   title: "Custom Title!dsd",
+        //   showCloseButton: false,
+        // }}
+      >
         <div style={{ padding: 20 }}>
           <LanguageSelector
             languageCode={language}
