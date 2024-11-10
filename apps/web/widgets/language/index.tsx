@@ -17,7 +17,7 @@ export const LanguageSelector: FC<LanguageSelectorProps> = ({ languageCode, onCl
         return (
           <UnstyledButton
             key={lang.code}
-            className={clsx(s.langButton, languageCode === lang.code && s.langButtonActive)}
+            className={clsx(s.button, languageCode === lang.code && s.buttonActive)}
             onClick={() => onClick(lang.code)}
           >
             <img src={langData.url} alt={`${langData.label} flag`} />

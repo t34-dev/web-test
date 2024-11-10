@@ -19,7 +19,7 @@ export const getLanguageData = (code: string) => {
   };
 };
 
-export const SUPPORTED_NAMESPACES = ["common", "default", "auth"] as const;
+export const SUPPORTED_NAMESPACES = ["common", "default", "auth", "provider"] as const;
 export type Namespaces = (typeof SUPPORTED_NAMESPACES)[number];
 export const DEFAULT_NAMESPACE: Namespaces = "common";
 

@@ -9,6 +9,7 @@ import { getLanguageData } from "@/i18n/constants";
 import { usePageContext } from "vike-react/usePageContext";
 import clsx from "clsx";
 import { T } from "@/i18n/T/T";
+import { ModalX } from "@/components/modals/Modal";
 
 export function HeaderButtons() {
   const { isClientSideNavigation } = usePageContext();
@@ -40,15 +41,26 @@ export function HeaderButtons() {
         </Button>
       </div>
 
-      <Modal opened={leftModalOpened} onClose={closeLeft} title="Languages" centered>
-        <LanguageSelector
-          languageCode={language}
-          onClick={(code) => {
-            changeLocale(code);
-            closeLeft();
-          }}
-        />
-      </Modal>
+      <ModalX opened={leftModalOpened} onClose={closeLeft} variant="center">
+        <div style={{ padding: 20 }}>
+          <LanguageSelector
+            languageCode={language}
+            onClick={(code) => {
+              changeLocale(code);
+              closeLeft();
+            }}
+          />
+        </div>
+      </ModalX>
+      {/*<Modal opened={leftModalOpened} onClose={closeLeft} title="Languages" centered>*/}
+      {/*  <LanguageSelector*/}
+      {/*    languageCode={language}*/}
+      {/*    onClick={(code) => {*/}
+      {/*      changeLocale(code);*/}
+      {/*      closeLeft();*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*</Modal>*/}
     </div>
   );
 }

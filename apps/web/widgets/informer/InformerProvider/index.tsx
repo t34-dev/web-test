@@ -7,7 +7,7 @@ import { useTypedTranslation } from "@/i18n/useTypedTranslation";
 export const InformerProviderWidget = () => {
   const { t, formatNumber } = useTypedTranslation();
   return (
-    <section className={s.wrap}>
+    <div className={s.wrap}>
       {informersData.map((elem) => (
         <InformerItem
           key={elem.title}
@@ -16,6 +16,6 @@ export const InformerProviderWidget = () => {
           value={`${formatNumber(elem.value)}${elem.proc ? "%" : ""}`}
         />
       ))}
-    </section>
+    </div>
   );
 };

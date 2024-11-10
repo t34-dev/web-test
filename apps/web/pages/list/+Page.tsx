@@ -9,7 +9,7 @@ export default function Page() {
     <section className={s.wrap}>
       <Container className={s.wrap__in}>
         <PageHeader
-          title={"RPC Endpoints"}
+          title={"Network List"}
           desc="Fastest, free-est, and privacy first RPC endpoints for 95 blockchains. Connect reliably to Web3 with ease!"
         />
 

@@ -15,6 +15,7 @@ import { usePageContext } from "vike-react/usePageContext";
 import { ScrollAreaX } from "@/components/ScrollAreaX";
 import { getPlace, Place } from "@/types/place";
 import { CONST } from "@/const";
+import { useScrollStore } from "@/store/scrollStore";
 
 interface MainLayoutProps {
   className?: string;
@@ -31,10 +32,10 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
   classNameBody,
   classNameFooter,
 }) => {
+  const { scrollRef, setScrollRef } = useScrollStore();
   const { vikeStore, urlLogical } = usePageContext();
   const [showNavigation, setShowNavigation] = useState(vikeStore?.place !== Place.LOGIN);
   const [isFirstRender, setIsFirstRender] = useState(true);
-  const scrollRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsFirstRender(false);
@@ -46,7 +47,7 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
 
   return (
     <RootProvider>
-      <ScrollAreaX isFull ref={scrollRef}>
+      <ScrollAreaX isFull ref={(ref) => ref && setScrollRef(ref)}>
         <div className={clsx(s.wrap, className)}>
           <AnimatePresence>
             {showNavigation && (
@@ -72,7 +73,7 @@ export const MainLayout: FC<PropsWithChildren<MainLayoutProps>> = ({
                 transition={{ duration: CONST.animation.duration }}
                 className={s.wrap__bodyContent}
                 onAnimationComplete={() => {
-                  if (scrollRef.current) {
+                  if (scrollRef) {
                     const event = new Event("resize");
                     window.dispatchEvent(event);
                   }

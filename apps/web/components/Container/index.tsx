@@ -1,10 +1,26 @@
 import s from "./Container.module.scss";
-import React, { FC, PropsWithChildren } from "react";
+import React, { ComponentPropsWithoutRef, ElementType } from "react";
 
-interface ContainerProps {
+interface BaseContainerProps {
   className?: string;
 }
 
-export const Container: FC<PropsWithChildren<ContainerProps>> = ({ children, className = "" }) => {
-  return <div className={`${s.container} ${className}`}>{children}</div>;
+type ContainerProps<T extends ElementType> = BaseContainerProps & {
+  as?: T;
+} & Omit<ComponentPropsWithoutRef<T>, keyof BaseContainerProps>;
+
+// Сам компонент с обобщенным типом
+export const Container = <T extends ElementType = "div">({
+  children,
+  className = "",
+  as,
+  ...rest
+}: ContainerProps<T>) => {
+  const Component = as || "div";
+
+  return (
+    <Component className={`${s.container} ${className}`} {...rest}>
+      {children}
+    </Component>
+  );
 };

@@ -7,6 +7,8 @@ import default_en from "./locales/en/default.json";
 import default_ru from "./locales/ru/default.json";
 import auth_en from "./locales/en/auth.json";
 import auth_ru from "./locales/ru/auth.json";
+import provider_en from "./locales/en/provider.json";
+import provider_ru from "./locales/ru/provider.json";
 import { DEFAULT_LANG, DEFAULT_NAMESPACE, SUPPORTED_LANGS, SUPPORTED_NAMESPACES } from "@/i18n/constants";
 
 let i18 = i18n.createInstance();
@@ -21,11 +23,13 @@ export function createI18nInstance(initialLocale: string = DEFAULT_LANG) {
           common: common_en,
           default: default_en,
           auth: auth_en,
+          provider: provider_en,
         },
         ru: {
           common: common_ru,
           default: default_ru,
           auth: auth_ru,
+          provider: provider_ru,
         },
       },
       lng: initialLocale, // Устанавливаем начальный язык

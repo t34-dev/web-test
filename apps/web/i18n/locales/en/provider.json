@@ -1,0 +1,13 @@
+{
+  "header_desc": "Fastest, free-est, and privacy first RPC endpoints for 95 blockchains. Connect reliably to Web3 with ease!",
+  "header_h1": "RPC Endpoints",
+  "table_column1": "Blockchain nodes",
+  "table_column2": "Mainnet endpoint link",
+  "table_column3": "Testnet endpoint link",
+  "trigger_1_desc": "Last 24 hours",
+  "trigger_1_title": "Total requests",
+  "trigger_2_desc": "Last 24 hours",
+  "trigger_2_title": "Cached requests",
+  "trigger_3_desc": "Last 24 hours",
+  "trigger_3_title": "Average req/sec"
+}

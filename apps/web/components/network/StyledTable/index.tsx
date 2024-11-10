@@ -1,4 +1,3 @@
-// index.tsx
 import React, { useEffect, useState } from "react";
 import s from "./StyledTable.module.scss";
 import { exampleData } from "./list.data";
@@ -6,6 +5,7 @@ import { useInViewport } from "@mantine/hooks";
 import { motion } from "framer-motion";
 import { transition } from "@/pages/login/+Page";
 import { Collapse } from "@mantine/core";
+import { useTypedTranslation } from "@/i18n/useTypedTranslation";
 
 export interface TableRow {
   id: string;
@@ -37,11 +37,11 @@ const TableRowComponent: React.FC<{
         ref={ref}
         onClick={onToggle}
         className={s.tableRow}
-        initial={{ opacity: 0, y: 20 }}
-        animate={init ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 30, scale: 0.9 }}
+        animate={init ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 30, scale: 0.9 }}
         transition={{
           ...transition,
-          duration: 0.1,
+          duration: 0.06,
           delay: index * 0.05,
         }}
       >
@@ -66,6 +66,7 @@ const TableRowComponent: React.FC<{
   );
 };
 export const StyledTable: React.FC<{ data?: TableRow[] }> = ({ data = exampleData }) => {
+  const { t } = useTypedTranslation();
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
   const [rowReady, setRowReady] = useState(false);
   useEffect(() => {
@@ -79,9 +80,9 @@ export const StyledTable: React.FC<{ data?: TableRow[] }> = ({ data = exampleDat
       <table className={s.table}>
         <thead>
           <tr>
-            <th>Заголовок 1</th>
-            <th>Заголовок 2</th>
-            <th>Заголовок 3</th>
+            <th>{t("provider:table_column1")}</th>
+            <th>{t("provider:table_column2")}</th>
+            <th>{t("provider:table_column3")}</th>
           </tr>
         </thead>
         <tbody>

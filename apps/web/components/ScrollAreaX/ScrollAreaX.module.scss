@@ -6,6 +6,7 @@
 }
 
 .scrollbar {
+    z-index: 50;
     &:hover {
         .thumb{
             background-color: rgba(1, 27, 45, 0.79);

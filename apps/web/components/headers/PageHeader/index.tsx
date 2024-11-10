@@ -7,9 +7,9 @@ interface PageHeaderProps {
 }
 export const PageHeader: FC<PageHeaderProps> = ({ title, desc }) => {
   return (
-    <header className={s.header}>
+    <div className={s.header}>
       <h1 className={s.header__h1}>{title}</h1>
       {desc && <div className={s.header__desc}>{desc}</div>}
-    </header>
+    </div>
   );
 };

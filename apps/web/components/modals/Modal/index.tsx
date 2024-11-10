@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Portal } from "@mantine/core";
 import clsx from "clsx";
 import s from "./Modal.module.scss";
-import { transition } from "@/pages/login/+Page";
+import { transition } from "@/const";
 
 type ModalVariant = "center" | "left" | "top" | "right" | "bottom";
 
@@ -29,15 +29,35 @@ const variants = {
       scale: 1,
       x: "-50%",
       y: "-50%",
-      transition,
+      keyframes: [
+        { scale: 0.5, opacity: 0 },
+        { scale: 2.1, opacity: 1 },
+        { scale: 1, opacity: 1 },
+      ],
+      transition: {
+        ...transition,
+        // scale: {
+        //   ...transition,
+        //   keyframes: [
+        //     { scale: 0.5, opacity: 0 },
+        //     { scale: 1.1, opacity: 1 },
+        //     { scale: 1, opacity: 1 },
+        //   ],
+        // },
+      },
     },
     exit: {
       opacity: 0,
       scale: 0.5,
       x: "-50%",
       y: "-50%",
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+      },
     },
   },
+  // Остальные варианты с обновленным transition
   left: {
     hidden: { x: "-100%", opacity: 0 },
     visible: {
@@ -45,7 +65,14 @@ const variants = {
       opacity: 1,
       transition,
     },
-    exit: { x: "-100%", opacity: 0 },
+    exit: {
+      x: "-100%",
+      opacity: 0,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+      },
+    },
   },
   right: {
     hidden: { x: "100%", opacity: 0 },
@@ -76,7 +103,7 @@ const variants = {
   },
 };
 
-export const Modal: FC<PropsWithChildren<ModalProps>> = ({
+export const ModalX: FC<PropsWithChildren<ModalProps>> = ({
   children,
   variant = "center",
   opened,
@@ -86,13 +113,14 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({
 }) => {
   return (
     <Portal>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {opened && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.7 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={transition}
               className={clsx(s.overlay, overlayClassName)}
               onClick={onClose}
             />

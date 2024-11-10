@@ -9,19 +9,19 @@ interface InformerItemType {
 
 export const informersData: InformerItemType[] = [
   {
-    title: "auth:trigger_1_title",
-    desc: "auth:trigger_1_desc",
+    title: "provider:trigger_1_title",
+    desc: "provider:trigger_1_desc",
     value: 3798945.6,
   },
   {
-    title: "auth:trigger_2_title",
-    desc: "auth:trigger_2_desc",
+    title: "provider:trigger_2_title",
+    desc: "provider:trigger_2_desc",
     value: 35.66,
     proc: true,
   },
   {
-    title: "auth:trigger_3_title",
-    desc: "auth:trigger_3_desc",
+    title: "provider:trigger_3_title",
+    desc: "provider:trigger_3_desc",
     value: 43.96,
   },
 ];

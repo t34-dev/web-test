@@ -1,7 +1,8 @@
 import { ScrollArea, ScrollAreaProps } from "@mantine/core";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useCallback } from "react";
 import s from "./ScrollAreaX.module.scss";
 import clsx from "clsx";
+import { useScrollStore } from "@/store/scrollStore";
 
 export interface ScrollAreaXProps extends ScrollAreaProps {
   isFull?: boolean;
@@ -20,14 +21,32 @@ export const ScrollAreaX = forwardRef<HTMLDivElement, ScrollAreaXProps>(
       scrollbarClassName,
       thumbClassName,
       classNames,
-      scrollbarSize = 16,
+      scrollbarSize = 12,
       ...props
     },
     ref,
   ) => {
+    const setScrollRef = useScrollStore((state) => state.setScrollRef);
+
+    // Используем useCallback для создания стабильной функции
+    const refCallback = useCallback(
+      (node: HTMLDivElement | null) => {
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+
+        if (node) {
+          setScrollRef(node);
+        }
+      },
+      [ref, setScrollRef],
+    );
+
     return (
       <ScrollArea
-        ref={ref}
+        viewportRef={refCallback}
         scrollbarSize={scrollbarSize}
         classNames={{
           root: clsx(isFull && s.rootScroll, rootClassName),

@@ -4,7 +4,7 @@ import s from "./Page.module.scss";
 import { Container } from "@/components/Container";
 import { Link } from "@/components/Link/Link";
 import { SignedIn, UserButton, useUser } from "@clerk/clerk-react";
-import { Modal } from "@/components/modals/Modal";
+import { ModalX } from "@/components/modals/Modal";
 import { useDisclosure } from "@mantine/hooks";
 
 export default function Page() {
@@ -29,9 +29,9 @@ export default function Page() {
         <hr />
         <Button onClick={open}>Open Modal</Button>
 
-        <Modal opened={opened} onClose={close} variant="left">
+        <ModalX opened={opened} onClose={close} variant="center">
           <div style={{ padding: 20 }}>Modal content</div>
-        </Modal>
+        </ModalX>
       </Container>
     </div>
   );
